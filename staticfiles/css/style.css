@@ -32,6 +32,11 @@ body {
     justify-content: space-between;
   }
 
+.navbar-title{
+    display: flex;
+    align-items: center;
+}
+
 .navbar-update-language{
     display: flex;
     flex-direction: row;
@@ -328,7 +333,9 @@ body {
 .update-box{
     background-color: #1cc88a;
     color: white;
-    width: 6em;
+    width: fit-content;
+    padding-right: 4px;
+    padding-left: 4px;
     height: 1.5em;
     display: flex;
     align-items: center;
@@ -344,7 +351,9 @@ body {
 .source-box{
     background-color: #e74a3b;
     color: white;
-    width: 4.5em;
+    width: fit-content;
+    padding-right: 4px;
+    padding-left: 4px;
     height: 1.5em;
     display: flex;
     align-items: center;
