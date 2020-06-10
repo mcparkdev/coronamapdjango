@@ -1,11 +1,13 @@
 #%%
 import plotly.graph_objects as go
+import plotly.express as px
 import re
 from pathlib import Path
 import os
 import json
 import numpy as np
 import operator
+import pandas as pd
 
 localities = {
     "Antonio Nariño": [1115,1],
@@ -59,65 +61,36 @@ def give_zip_list(name):
     return switcher.get(name, "Invalid list name")
 
 #%%
-from sqlalchemy import create_engine
-from urllib.request import urlopen
-import json
-import pandas as pd
-import plotly.express as px
-
-DATABASES = {
-    'coronamap':{
-        'NAME': 'coronamap',
-        'USER': 'postgres',
-        'PASSWORD': '12150426aA',
-        'HOST': 'localhost',
-        'PORT': 5432,
-    },
-    'coronamap-yesterday':{
-        'NAME': 'coronamap-yesterday',
-        'USER': 'postgres',
-        'PASSWORD': '12150426aA',
-        'HOST': 'localhost',
-        'PORT': 5432,
-    },
-}
-
-# choose the database to use
-db = DATABASES['coronamap']
-db_yesterday = DATABASES['coronamap']
-# construct an engine connection string
-engine_string = "postgresql+psycopg2://{user}:{password}@{host}:{port}/{database}".format(
-    user = db['USER'],
-    password = db['PASSWORD'],
-    host = db['HOST'],
-    port = db['PORT'],
-    database = db['NAME'],
-)
-
-engine_string_yesterday = "postgresql+psycopg2://{user}:{password}@{host}:{port}/{database}".format(
-    user = db_yesterday['USER'],
-    password = db_yesterday['PASSWORD'],
-    host = db_yesterday['HOST'],
-    port = db_yesterday['PORT'],
-    database = db_yesterday['NAME'],
-)
-engine = create_engine(engine_string)
-engine_yesterday = create_engine(engine_string_yesterday)
-
 '''Change directory'''
-data_file_today = 'static/data/today.csv'
-data_file_yesterday = 'static/data/yesterday.csv'
-# data_file = '7_6.csv'
-def give_raw_df(data=data_file_today,update=False,eng=engine):
-    if update:
-        i=pd.read_csv(data)
-        i.to_sql('covid_cases', eng, if_exists='replace')
-    df = pd.read_sql_query('select * from covid_cases',con=eng)
-    df['state'] = df['state'].str.capitalize()
-    df.loc[df['state'] == "Fallecido (no aplica, no causa directa)", 'state'] = "Fallecido"
-    return df
-df = give_raw_df(update=True)
-df_yesterday = give_raw_df(data=data_file_yesterday,eng=engine_yesterday,update=True)
+data_file_today = 'staticfiles/data/today.csv'
+data_file_yesterday = 'staticfiles/data/yesterday.csv'
+# data_file_today = 'today.csv'
+# data_file_yesterday = 'yesterday.csv'
+#%%
+def read_csv(datafile, fix=True):
+    data_df = pd.read_csv(datafile, skiprows=4,sep=';', skipfooter=2, engine="python")
+    if fix:
+        fix_df(data_df) 
+    return data_df
+
+#%%
+def fix_df(data):
+    column_names = ['caseID',"date","city","locality","age","sex","type","place","state"]
+    data.columns = column_names
+    data['state'] = data['state'].str.strip()
+    data['state'] = data['state'].str.capitalize()
+    data.loc[data['state'] == "Fallecido (no aplica, no causa directa)", 'state'] = "Fallecido"
+    date_list =[]
+    date_raw = data['date'].tolist()
+    for i in range(0, len(data)):
+        date_fixed = date_raw[i].split("/")
+        date_fixed.reverse()
+        date_fixed = "-".join(date_fixed)
+        date_list.append(date_fixed)
+    data['date'] = date_list
+#%%
+df = read_csv(data_file_today)
+df_yesterday = read_csv(data_file_yesterday)
 #%%
 def give_bogota_total():
     return len(df)
