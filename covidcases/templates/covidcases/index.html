@@ -1,0 +1,248 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="data-box-containers">
+  <div class="data-box-row">
+    <div class="data-box-main-data">
+      <div class="data-box-header">
+        Datos Actuales
+      </div>
+      <div class="data-box-main-data-container">
+        <div class="data-box-main">
+          <div class="data-box-main-title">Bogotá</div>
+          <div class="data-box-main-content">
+            <div class="data-box-main-content-total">
+              {{ bogota.0 }}
+            </div>
+            <div class="data-box-main-content-extra">
+              (+{{ bogota.1 }})
+            </div>
+          </div>
+        </div>
+        <div class="data-box-main">
+          <div class="data-box-main-title">Nacional</div>
+          <div class="data-box-main-content">
+            <div class="data-box-main-content-total">
+              40,719
+            </div>
+            <div class="data-box-main-content-extra">
+              (+1,483)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="data-box-main-detailed-data">
+      <div class="data-box-header">
+          Detalles
+      </div>
+      <div class="data-box-main-detailed-container">
+        <div class="data-box-main-detailed">
+          <div class="data-box-main-detailed-title" style="padding-top:0px;">
+            Bogotá: {{ bogota.0}}
+          </div>
+          <div class="data-box-main-detailed-label">
+            Recuperado: 
+            <span class="main-recovered">
+            {{ bogota.2.0 }}
+            </span>
+            / Moderados: 
+            <span class="main-mild">
+            {{ bogota.2.1 }}
+            </span>
+            / Severos: 
+            <span class="main-severe">
+            {{ bogota.2.2 }}
+            </span>
+            / Críticos: 
+            <span class="main-critical">
+            {{ bogota.2.3 }}
+            </span>
+            / Fallecidos: 
+            <span class="main-deceased">
+            {{ bogota.2.4 }}
+            </span>
+          </div>
+          <div id="main-bogota-graph" class="data-box-main-detailed-graph">
+            <div class="main-recovered-graph">
+            </div>
+            <div class="main-mild-graph">
+            </div>
+            <div class="main-severe-graph">
+            </div>
+            <div class="main-critical-graph">
+            </div>
+            <div class="main-deceased-graph">
+            </div>
+          </div>
+          <script>
+            var divs = document.getElementById("main-bogota-graph").children;
+            divs[0].style.width = "{{bogota.3.0}}"; 
+            divs[1].style.width = "{{bogota.3.1}}";
+            divs[2].style.width = "{{bogota.3.2}}";
+            divs[3].style.width = "{{bogota.3.3}}";
+            divs[4].style.width = "{{bogota.3.4}}";
+          </script>
+          <div class="data-box-main-detailed-title">
+            Nacional: 40,719
+          </div>
+          <div class="data-box-main-detailed-label">
+            Recuperados: 
+            <span class="main-recovered">
+            16,427
+            </span>
+            / Moderados, severos y críticos: 
+            <span class="main-mild">
+            22,984
+            </span>
+            / Fallecidos: 
+            <span class="main-deceased">
+            1,308
+            </span>
+          </div>
+          <div id="main-national-graph" class="data-box-main-detailed-graph" style="padding-bottom:0;">
+            <div class="main-recovered-graph">
+            </div>
+            <div class="main-mild-graph">
+            </div>
+            <div class="main-deceased-graph">
+            </div>
+            <script>
+            var divs = document.getElementById("main-national-graph").children;
+            divs[0].style.width = "40.34%"; 
+            divs[1].style.width = "56.45%";
+            divs[2].style.width = "3.21%";
+          </script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="data-box-row">
+    <div class="data-box-main-data">
+      <div class="data-box-header">
+        Casos confirmados por localidad
+      </div>
+      <div class="data-box-main-data-container">
+        <div class="search-container">
+          <div class="search">
+            <i class="fas fa-search"></i>
+            <input id="case-search-input" class="search" type='text' placeholder='Buscar por localidad'/>
+          </div>
+        </div>
+        <div class="locality-update-filter-container">
+          <div class="locality-update">
+            Actualizado: {{ update }}
+          </div>
+          <div class="locality-filter">
+            Decreciente (# de casos)
+          </div>
+        </div>
+        <div id="cases-list" class="cases-list-container">
+          {% for local in locality %}
+            <div id="case-container" class="case-container">
+              <div class="case-container-background">
+                <div class="case-container-header">
+                  <span class="case-container-header-title">
+                    {{local.name}}: {{local.total}}
+                  </span>
+                  <span class="case-container-header-extra">
+                    (+{{local.extra}})
+                  </span>
+                </div>
+                <div class="data-box-main-detailed-label">
+                  Recuperado: 
+                  <span class="main-recovered">
+                  {{ local.state.Recuperado }}
+                  </span>
+                  / Moderados: 
+                  <span class="main-mild">
+                  {{ local.state.Moderado }}
+                  </span>
+                  / Severos: 
+                  <span class="main-severe">
+                  {{ local.state.Severo }}
+                  </span>
+                  / Críticos: 
+                  <span class="main-critical">
+                  {{ local.state.Crítico }}
+                  </span>
+                  / Fallecidos: 
+                  <span class="main-deceased">
+                  {{ local.state.Fallecido }}
+                  </span>
+                </div>
+                <div id="{{local.id}}" class="data-box-main-detailed-graph">
+                  <div class="main-recovered-graph">
+                  </div>
+                  <div class="main-mild-graph">
+                  </div>
+                  <div class="main-severe-graph">
+                  </div>
+                  <div class="main-critical-graph">
+                  </div>
+                  <div class="main-deceased-graph">
+                  </div>
+                </div>
+                <script>
+                  var divs = document.getElementById("{{local.id}}").children;
+                  divs[0].style.width = "{{ local.state_ratio.Recuperado }}"; 
+                  divs[1].style.width = "{{ local.state_ratio.Moderado }}"; 
+                  divs[2].style.width = "{{ local.state_ratio.Severo }}"; 
+                  divs[3].style.width = "{{ local.state_ratio.Crítico }}"; 
+                  divs[4].style.width = "{{ local.state_ratio.Fallecido }}"; 
+                </script>
+              </div>
+            </div>
+          {% endfor %}
+          <script>
+            $("#case-search-input").keyup(function() {
+              var val = $(this).val().toUpperCase();
+              console.log(val);
+              $('.case-container-header-title').each(function() {
+                var parent = $(this).parents('div.case-container');
+                length = $(this).text().length > 0;
+                if (length && $(this).text().toUpperCase().trim().indexOf(val) < 0)
+                {
+                        parent.hide();
+                }
+                else
+                {
+                        parent.show();
+                }
+              });
+            });
+          </script>
+        </div>
+      </div>
+    </div>
+    <div class="data-box-main-data">
+      <div class="data-box-header">
+        CoronaMap
+      </div>
+      <div class="data-box-main-detailed-container">
+        <div class="coronamap-plot">
+          {% autoescape off %}
+          {{ plot_div }}
+          {% endautoescape %}
+        </div>
+        <div class="update-container">
+          <div class="update-box">
+            Actualizado
+          </div>
+          <div class="update-content">
+            {{ update }}
+          </div>
+        </div>
+        <div class="source-container">
+          <div class="source-box">
+            Fuente
+          </div>
+          <div class="source-content">
+            Subsecretaría de Salud Pública. Secretaría Distrital de Salud 2020
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

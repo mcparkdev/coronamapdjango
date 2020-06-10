@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html >
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <script src='https://kit.fontawesome.com/c939d0e917.js'></script>
+    <title>CoronaMap Bogota</title>
+    <script src="{% static 'js/index.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-title">
+      <i class="fas fa-history"></i>
+      BOGOTÁ D.C. COVID-19
+    </div>
+    <div class="navbar-update-language">
+      <div class="navbar-update">
+        Actualizado: 8.6.20, 15:20
+      </div>
+      <div class="navbar-language">
+        Idioma: Español
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="sidebar">
+      <div class="sidebar-items-container">
+        <div class="sidebar-item">
+          <i class="fas fa-home"></i>
+          Home
+        </div>
+        <div class="sidebar-item">
+          <i class="fas fa-info-circle"></i>
+          Información
+        </div>
+      </div>
+    </div>
+    {% block content %}
+    {% endblock %}
+  </div>
+  </body>
+</html>
