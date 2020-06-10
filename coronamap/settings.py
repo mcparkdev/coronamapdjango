@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'f_czj1_7415fk!uru8h8io#e4lbt%l
 # DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = [*]
+ALLOWED_HOSTS = ['localhost','https://coronamapbogota.herokuapp.com/']
 
 
 # Application definition
