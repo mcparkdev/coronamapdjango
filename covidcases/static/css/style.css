@@ -56,6 +56,8 @@ body {
     justify-content: flex-end;
     width: 100%;
     margin-left: 200px;
+    margin-right:16px;
+
 }
 
 .navbar-update{
@@ -64,22 +66,15 @@ body {
 }
 
 .navbar-language{
-    background-color: #666;
-    color: white;
-    width: 8.5em;
+    width: fit-content;
+    padding-left: 4px;
+    padding-right: 4px;
     height: 1.5em;
-    border-radius: 30px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease-in-out;
-}
-
-.navbar-language:hover{
-    background-color: #333;
-    cursor: pointer;
-    cursor: hand;
-    color: #e6e6e6;
 }
 
 .main {
@@ -90,12 +85,13 @@ body {
 }
 
 .sidebar{
-    height: 100vh;
+    height: 630px;
     width: 240px;
     background-color: white;
     display: flex;
     flex-direction: column;
     position: fixed;
+    justify-content: space-between;
 }
 
 .sidebar-items-container{
@@ -135,7 +131,7 @@ body {
     transition: all 0.2s ease-in-out;
 }
 
-.sidebar-item-header:hover, .sidebar-title:hover, .sidebar-item-content:hover, .data-box-main:hover{
+.sidebar-item-header:hover, .sidebar-title:hover, .sidebar-item-content:hover, .data-box-main:hover, .navbar-language:hover{
     background-color: #dff2ff;
     color: #4d7bd1;
     cursor: pointer;
@@ -160,6 +156,13 @@ body {
     margin-right: 16px;
     border-radius: 8px;
     transition: all 0.2s ease-in-out;
+}
+
+.footer{
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
 }
 
 .data-box-containers{

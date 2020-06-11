@@ -12,15 +12,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
   </head>
-  <body>
+    <body>
   <div class="navbar">
     <div class="navbar-title">
       <i class="fas fa-shield-virus"></i>
-      코로나맵 보고타
+      <strong>보고타: 코로나-19</strong>
     </div>
     <div class="navbar-update-language">
       <div class="navbar-update">
-        UPDATE: 8.6.20, 15:20
+        UPDATE: 10.6.20, 0:00 시
       </div>
       <div class="navbar-language">
         언어: 한국어
@@ -30,14 +30,49 @@
   <div class="main">
     <div class="sidebar">
       <div class="sidebar-items-container">
-        <div class="sidebar-item">
-          <i class="fas fa-home"></i>
+        <div class="sidebar-title">
           홈
+          <i class="fas fa-bars"></i>
         </div>
         <div class="sidebar-item">
-          <i class="fas fa-info-circle"></i>
-          정보
+          <div class="sidebar-item-header">
+            <i class="fas fa-home"></i>
+            핵심내용
+          </div>
+          <div class="sidebar-item-content-container">
+            <span class="sidebar-item-content">현황</span>
+            <span class="sidebar-item-content">상세현황</span>
+            <span class="sidebar-item-content">지역별 현황</span>
+            <span class="sidebar-item-content">코로나맵</span>
+          </div>
         </div>
+        <div class="sidebar-item">
+          <div class="sidebar-item-header">
+            <i class="fas fa-hospital-alt"></i>
+            병원
+          </div>
+          <div class="sidebar-item-content-container">
+            <span class="sidebar-item-content">사용 가능 여부</span>
+            <span class="sidebar-item-content">ICU 병원</span>
+          </div>
+        </div>
+        <div class="sidebar-item">
+          <div class="sidebar-item-header">
+            <i class="fas fa-donate"></i>
+            기부
+          </div>
+          <div class="sidebar-item-content-container">
+            <span class="sidebar-item-content">연락처</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <span class="developer">
+          개발자: 박민창
+        </span>
+        <span class="email">
+          이메일: mc.park@uniandes.edu.co
+        </span>
       </div>
     </div>
     {% block content %}
