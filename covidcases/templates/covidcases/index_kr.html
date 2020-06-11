@@ -1,4 +1,13 @@
 {% extends 'base_kr.html' %}
+
+{% block language %}
+          <div class="sidebar-item-content-container">
+            <span class="sidebar-item-content"><a href="{% url "home_en" %}" >한국어</a></span>
+            <span class="sidebar-item-content"><a href="{% url "home" %}" >스페인어</a></span>
+            <span class="sidebar-item-content"><a href="{% url "home_en" %}" >영어</a></span>
+          </div>
+{% endblock %}
+
 {% block content %}
 <div class="data-box-containers">
   <div class="data-box-row">
@@ -22,10 +31,10 @@
           <div class="data-box-main-title">국내확진자</div>
           <div class="data-box-main-content">
             <div class="data-box-main-content-total">
-              40,719
+              43,682명
             </div>
             <div class="data-box-main-content-extra">
-              (전일대비)+1,483
+              (전일대비)+1,359
             </div>
           </div>
         </div>
@@ -33,7 +42,7 @@
           <div class="data-box-main-title">세계확진자</div>
           <div class="data-box-main-content">
             <div class="data-box-main-content-total">
-              7,145,539
+              7,145,539명
             </div>
             <div class="data-box-main-content-extra">
               (전일대비)+108,918
@@ -94,20 +103,20 @@
             divs[4].style.width = "{{bogota.3.4}}";
           </script>
           <div class="data-box-main-detailed-title">
-            국내: 40,719명
+            국내: 43,682명
           </div>
           <div class="data-box-main-detailed-label">
             완치자: 
             <span class="main-recovered">
-            16,427
+            17,333
             </span>
             / 격리자: 
             <span class="main-mild">
-            22,984
+            25,096
             </span>
             / 사망자: 
             <span class="main-deceased">
-            1,308
+            1,433
             </span>
           </div>
           <div id="main-national-graph" class="data-box-main-detailed-graph" style="padding-bottom:0;">
@@ -119,13 +128,13 @@
             </div>
             <script>
             var divs = document.getElementById("main-national-graph").children;
-            divs[0].style.width = "40.34%"; 
-            divs[1].style.width = "56.45%";
-            divs[2].style.width = "3.21%";
+            divs[0].style.width = "39.52%"; 
+            divs[1].style.width = "57.22%";
+            divs[2].style.width = "3.27%";
           </script>
           </div>
           <div class="data-box-main-detailed-title">
-            세계: 7,444,644
+            세계: 7,444,644명
           </div>
           <div class="data-box-main-detailed-label">
             완치자: 
@@ -185,10 +194,10 @@
               <div class="case-container-background">
                 <div class="case-container-header">
                   <span class="case-container-header-title">
-                    {{local.name}}: {{local.total}}
+                    {{local.name}}: {{local.total}}명
                   </span>
                   <span class="case-container-header-extra">
-                    (+{{local.extra}})
+                    (전일대비)+{{local.extra}}
                   </span>
                 </div>
                 <div class="data-box-main-detailed-label">

@@ -1,10 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'base_en.html' %}
 
 {% block language%}
           <div class="sidebar-item-content-container">
-            <span class="sidebar-item-content"><a href="{% url "home_kr" %}" >Coreano</a></span>
-            <span class="sidebar-item-content"><a href="{% url "home" %}" >Español</a></span>
-            <span class="sidebar-item-content"><a href="{% url "home_en" %}" >Inglés</a></span>
+            <span class="sidebar-item-content"><a href="{% url "home_kr" %}" >Korean</a></span>
+            <span class="sidebar-item-content"><a href="{% url "home" %}" >Spanish</a></span>
+            <span class="sidebar-item-content"><a href="{% url "home_en" %}" >English</a></span>
           </div>
 {% endblock %}
 
@@ -13,7 +13,7 @@
   <div class="data-box-row">
     <div class="data-box-main-data">
       <div class="data-box-header">
-        Datos Actuales
+        Today's data
       </div>
       <div class="data-box-main-data-container">
         <div class="data-box-main">
@@ -28,7 +28,7 @@
           </div>
         </div>
         <div class="data-box-main">
-          <div class="data-box-main-title">Nacional</div>
+          <div class="data-box-main-title">National</div>
           <div class="data-box-main-content">
             <div class="data-box-main-content-total">
               40,719
@@ -39,7 +39,7 @@
           </div>
         </div>
         <div class="data-box-main">
-          <div class="data-box-main-title">Global</div>
+          <div class="data-box-main-title">Worldwide</div>
           <div class="data-box-main-content">
             <div class="data-box-main-content-total">
               7,145,539
@@ -53,7 +53,7 @@
     </div>
     <div class="data-box-main-detailed-data">
       <div class="data-box-header">
-          Estado de pacientes
+          Patient's state
       </div>
       <div class="data-box-main-detailed-container">
         <div class="data-box-main-detailed">
@@ -61,23 +61,23 @@
             Bogotá: {{ bogota.0}}
           </div>
           <div class="data-box-main-detailed-label">
-            Recuperados: 
+            Recovered: 
             <span class="main-recovered">
             {{ bogota.2.0 }}
             </span>
-            / Moderados: 
+            / Moderate: 
             <span class="main-mild">
             {{ bogota.2.1 }}
             </span>
-            / Severos: 
+            / Severe: 
             <span class="main-severe">
             {{ bogota.2.2 }}
             </span>
-            / Críticos: 
+            / Critical: 
             <span class="main-critical">
             {{ bogota.2.3 }}
             </span>
-            / Fallecidos: 
+            / Dead: 
             <span class="main-deceased">
             {{ bogota.2.4 }}
             </span>
@@ -103,18 +103,18 @@
             divs[4].style.width = "{{bogota.3.4}}";
           </script>
           <div class="data-box-main-detailed-title">
-            Nacional: 40,719
+            National: 40,719
           </div>
           <div class="data-box-main-detailed-label">
-            Recuperados: 
+            Recovered: 
             <span class="main-recovered">
             16,427
             </span>
-            / Moderados, severos y críticos: 
+            / Active: 
             <span class="main-mild">
             22,984
             </span>
-            / Fallecidos: 
+            / Dead: 
             <span class="main-deceased">
             1,308
             </span>
@@ -134,18 +134,18 @@
           </script>
           </div>
           <div class="data-box-main-detailed-title">
-            Global: 7,444,644
+            Worldwide: 7,444,644
           </div>
           <div class="data-box-main-detailed-label">
-            Recuperados: 
+            Recovered: 
             <span class="main-recovered">
             3,722,536
             </span>
-            / Moderados, severos y críticos: 
+            / Active: 
             <span class="main-mild">
             3,303,985
             </span>
-            / Fallecidos: 
+            / Dead: 
             <span class="main-deceased">
             418,123
             </span>
@@ -171,21 +171,21 @@
   <div class="data-box-row">
     <div class="data-box-locality-data">
       <div class="data-box-header">
-        Casos confirmados por localidad
+        Confirmed cases by locality
       </div>
       <div class="data-box-main-data-container">
         <div class="search-container">
           <div class="search">
             <i class="fas fa-search"></i>
-            <input id="case-search-input" class="search" type='text' placeholder='Buscar por localidad'/>
+            <input id="case-search-input" class="search" type='text' placeholder='Search by locality'/>
           </div>
         </div>
         <div class="locality-update-filter-container">
           <div class="locality-update">
-            Actualizado: {{ update }}
+            UPDATE: {{ update }}
           </div>
           <div class="locality-filter">
-            Decreciente (# de casos)
+            Decreasing order (# of cases)
           </div>
         </div>
         <div id="cases-list" class="cases-list-container">
@@ -201,23 +201,23 @@
                   </span>
                 </div>
                 <div class="data-box-main-detailed-label">
-                  Recuperados: 
+                  Recovered: 
                   <span class="main-recovered">
                   {{ local.state.Recuperado }}
                   </span>
-                  / Moderados: 
+                  / Moderate: 
                   <span class="main-mild">
                   {{ local.state.Moderado }}
                   </span>
-                  / Severos: 
+                  / Severe: 
                   <span class="main-severe">
                   {{ local.state.Severo }}
                   </span>
-                  / Críticos: 
+                  / Crítical: 
                   <span class="main-critical">
                   {{ local.state.Crítico }}
                   </span>
-                  / Fallecidos: 
+                  / Dead: 
                   <span class="main-deceased">
                   {{ local.state.Fallecido }}
                   </span>
@@ -278,7 +278,7 @@
         </div>
         <div class="update-container">
           <div class="update-box">
-            Actualizado
+            UPDATE
           </div>
           <div class="update-content">
             {{ update }}
@@ -286,7 +286,7 @@
         </div>
         <div class="source-container">
           <div class="source-box">
-            Fuente
+            Source
           </div>
           <div class="source-content">
             Subsecretaría de Salud Pública. Secretaría Distrital de Salud 2020
