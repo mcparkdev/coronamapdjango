@@ -29,11 +29,22 @@
             </div>
           </div>
         </div>
+        <div class="data-box-main">
+          <div class="data-box-main-title">Global</div>
+          <div class="data-box-main-content">
+            <div class="data-box-main-content-total">
+              7,145,539
+            </div>
+            <div class="data-box-main-content-extra">
+              (+108,918)
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="data-box-main-detailed-data">
       <div class="data-box-header">
-          Detalles
+          Estado de pacientes
       </div>
       <div class="data-box-main-detailed-container">
         <div class="data-box-main-detailed">
@@ -41,7 +52,7 @@
             Bogotá: {{ bogota.0}}
           </div>
           <div class="data-box-main-detailed-label">
-            Recuperado: 
+            Recuperados: 
             <span class="main-recovered">
             {{ bogota.2.0 }}
             </span>
@@ -113,12 +124,43 @@
             divs[2].style.width = "3.21%";
           </script>
           </div>
+          <div class="data-box-main-detailed-title">
+            Global: 7,444,644
+          </div>
+          <div class="data-box-main-detailed-label">
+            Recuperados: 
+            <span class="main-recovered">
+            3,722,536
+            </span>
+            / Moderados, severos y críticos: 
+            <span class="main-mild">
+            3,303,985
+            </span>
+            / Fallecidos: 
+            <span class="main-deceased">
+            418,123
+            </span>
+          </div>
+          <div id="main-worldwide-graph" class="data-box-main-detailed-graph" style="padding-bottom:0;">
+            <div class="main-recovered-graph">
+            </div>
+            <div class="main-mild-graph">
+            </div>
+            <div class="main-deceased-graph">
+            </div>
+            <script>
+            var divs = document.getElementById("main-worldwide-graph").children;
+            divs[0].style.width = "50.00%"; 
+            divs[1].style.width = "44.38%";
+            divs[2].style.width = "5.62%";
+          </script>
+          </div>
         </div>
       </div>
     </div>
   </div>
   <div class="data-box-row">
-    <div class="data-box-main-data">
+    <div class="data-box-locality-data">
       <div class="data-box-header">
         Casos confirmados por localidad
       </div>
@@ -150,7 +192,7 @@
                   </span>
                 </div>
                 <div class="data-box-main-detailed-label">
-                  Recuperado: 
+                  Recuperados: 
                   <span class="main-recovered">
                   {{ local.state.Recuperado }}
                   </span>
@@ -215,7 +257,7 @@
         </div>
       </div>
     </div>
-    <div class="data-box-main-data">
+    <div class="data-box-coronamap">
       <div class="data-box-header">
         CoronaMap
       </div>
