@@ -1,6 +1,8 @@
+html { height:100%; overflow:hidden; }
 body {
     font-family: Helvetica, sans-serif;
     height: 100%;
+    overflow:hidden; 
     margin: 0;
     padding: 0;
     display:flex;
