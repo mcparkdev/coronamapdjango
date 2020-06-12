@@ -167,6 +167,7 @@ body {
     display: flex;
     flex-direction: column;
     padding: 16px;
+    margin-bottom: 40px;
 }
 
 .data-box-containers{

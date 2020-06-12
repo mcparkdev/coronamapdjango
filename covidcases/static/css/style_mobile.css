@@ -138,6 +138,7 @@ body {
     display: flex;
     flex-direction: column;
     padding: 16px;
+    margin-bottom:40px;
 }
 
 .data-box-containers{
@@ -418,10 +419,9 @@ body {
 
 .cases-list-container{
     width: 100%;
-    height: 440px;
-    display:flex;
+    height: fit-content;
+    display: flex;
     flex-direction: column;
-    overflow-y: scroll;
 }
 
 .case-container{
