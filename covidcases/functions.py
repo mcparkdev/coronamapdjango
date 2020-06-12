@@ -341,7 +341,7 @@ def give_sidebar(lang="spa"):
             "4":"Idioma"
         },
         "content":{
-            "1": ["Datos Actuales", "Estado de pacientes", "Casos por localidad","CoronaMap","Casos por edad y sexo"],
+            "1": ["Datos Actuales", "Estado de pacientes", "Casos por localidad","CoronaMap","Casos por edad y sexo", "한인회 공지"],
             "2": ["Hacinación", "Hospitales UCI"],
             "3": ["Voluntario", "Donación"],
             "4": ["Coreano", "Español", "Inglés"],
@@ -356,7 +356,7 @@ def give_sidebar(lang="spa"):
             "4":"언어"
         },
         "content":{
-            "1": ["현황", "상세현황", "지역별 현황","코로나맵","성별&연령대별 분석"],
+            "1": ["현황", "상세현황", "지역별 현황","코로나맵","성별&연령대별 분석","한인회 공지"],
             "2": ["사용 가능 여부", "ICU 병원"],
             "3": ["지원", "기부"],
             "4": ["한국어", "스페인어", "영어"],
@@ -371,7 +371,7 @@ def give_sidebar(lang="spa"):
             "4":"Language",
         },
         "content":{
-            "1": ["Today's Data", "Patient's state", "Cases by Locality","CoronaMap","Cases by age & sex"],
+            "1": ["Today's Data", "Patient's state", "Cases by Locality","CoronaMap","Cases by age & sex","한인회 공지"],
             "2": ["Availability", "ICU Hospitals"],
             "3": ["Volunteer", "Donation"],
             "4": ["Korean","Spanish","English"],
@@ -614,6 +614,10 @@ def give_data_box(lang="spa"):
 
 #%%
 
+def give_markdown():
+    markdowntext = open('staticfiles/md/6_11.md', encoding="utf8").read()
+    return markdowntext
+#%%
 def give_context(lang="spa"):
     bogota_total = f"{give_bogota_total():,d}"
     bogota_extra = f"{give_bogota_extra():,d}"
@@ -622,7 +626,6 @@ def give_context(lang="spa"):
     bogota_state_ratio = give_bogota_state('ratio')
     # Data by locality
     locality_state_list = give_list_locality_state_ratio()
-    # Data by age & sex
 
     context={
         'title' : give_title(lang),
@@ -633,5 +636,6 @@ def give_context(lang="spa"):
         'covid_cases': give_data_dict('locality'),
         'plot_div': [give_plot_div(lang), give_age_sex_graph(lang)],
         'locality': locality_state_list,
+        'md' : give_markdown(),
     }
     return context

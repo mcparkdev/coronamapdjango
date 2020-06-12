@@ -319,5 +319,18 @@
       </div>
     </div>
   </div>
+  <div id="markdown-data" class="data-box-markdown">
+    <div class="data-box-header">
+      {{ sidebar.content.1.5 }}
+    </div>
+    <div class="data-box-markdown-container">
+      <div class="data-box-markdown-content">
+      {% load markdownify %}
+
+      {{ md|markdownify }}
+
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}
