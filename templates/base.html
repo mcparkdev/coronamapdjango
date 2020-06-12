@@ -16,14 +16,14 @@
   <div class="navbar">
     <div class="navbar-title">
       <i class="fas fa-shield-virus"></i>
-      <strong>BOGOTÁ: COVID-19</strong>
+      <strong>{{ navbar.0 }}</strong>
     </div>
     <div class="navbar-update-language">
       <div class="navbar-update">
-        Actualizado: 10.6.20, 0:00
+        {{ navbar.1 }}
       </div>
       <div class="navbar-language">
-        Idioma: Español
+        {{ navbar.2 }}
       </div>
     </div>
   </div>
@@ -31,19 +31,19 @@
     <div class="sidebar">
       <div class="sidebar-items-container">
         <div class="sidebar-title">
-          Home
+          {{sidebar.title}}
           <i class="fas fa-bars"></i>
         </div>
         <div class="sidebar-item">
           <div class="sidebar-item-header">
             <i class="fas fa-home"></i>
-            Datos Principales
+            <span>Datos Principales</span>
           </div>
           <div class="sidebar-item-content-container">
-            <span class="sidebar-item-content">Datos Actuales</span>
-            <span class="sidebar-item-content">Estado de pacientes</span>
-            <span class="sidebar-item-content">Casos por localidad</span>
-            <span class="sidebar-item-content">CoronaMap</span>
+            <span class="sidebar-item-content" onclick="smoothScroll('main-data')">Datos Actuales</span>
+            <span class="sidebar-item-content" onclick="smoothScroll('detailed-data')">Estado de pacientes</span>
+            <span class="sidebar-item-content" onclick="smoothScroll('locality-data')">Casos por localidad</span>
+            <span class="sidebar-item-content" onclick="smoothScroll('map-data')">CoronaMap</span>
           </div>
         </div>
         <div class="sidebar-item">

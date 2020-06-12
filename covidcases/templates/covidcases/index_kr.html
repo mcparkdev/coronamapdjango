@@ -1,10 +1,10 @@
 {% extends 'base_kr.html' %}
 
 {% block language %}
-          <div class="sidebar-item-content-container">
-            <span class="sidebar-item-content"><a href="{% url "home_en" %}" >한국어</a></span>
-            <span class="sidebar-item-content"><a href="{% url "home" %}" >스페인어</a></span>
-            <span class="sidebar-item-content"><a href="{% url "home_en" %}" >영어</a></span>
+          <div class="sidebar-item-content-container" onclick="actionNav()">
+            <span class="sidebar-item-content"><a href="{% url "home_kr" %}" >{{ sidebar.content.4.0 }}</a></span>
+            <span class="sidebar-item-content"><a href="{% url "home_spa" %}" >   {{ sidebar.content.4.1 }}</a></span>
+            <span class="sidebar-item-content"><a href="{% url "home_en" %}" >{{ sidebar.content.4.2 }}</a></span>
           </div>
 {% endblock %}
 
@@ -13,39 +13,39 @@
   <div class="data-box-row">
     <div class="data-box-main-data">
       <div class="data-box-header">
-        현황
+        {{ sidebar.content.1.0 }}
       </div>
       <div class="data-box-main-data-container">
         <div class="data-box-main">
-          <div class="data-box-main-title">보고타확진자</div>
+          <div class="data-box-main-title">{{ data_box.main.title.bogota }}</div>
           <div class="data-box-main-content">
             <div class="data-box-main-content-total">
-              {{ bogota.0 }}명
+              {{ data_box.main.total.bogota }}
             </div>
             <div class="data-box-main-content-extra">
-              (전일대비)+{{ bogota.1 }}
+              {{ data_box.main.extra.bogota }}
             </div>
           </div>
         </div>
         <div class="data-box-main">
-          <div class="data-box-main-title">국내확진자</div>
+          <div class="data-box-main-title">{{ data_box.main.title.national }}</div>
           <div class="data-box-main-content">
             <div class="data-box-main-content-total">
-              43,682명
+              {{ data_box.main.total.national }}
             </div>
             <div class="data-box-main-content-extra">
-              (전일대비)+1,359
+              {{ data_box.main.extra.national }}
             </div>
           </div>
         </div>
         <div class="data-box-main">
-          <div class="data-box-main-title">세계확진자</div>
+          <div class="data-box-main-title">{{ data_box.main.title.worldwide }}</div>
           <div class="data-box-main-content">
             <div class="data-box-main-content-total">
-              7,145,539명
+              {{ data_box.main.total.worldwide }}
             </div>
             <div class="data-box-main-content-extra">
-              (전일대비)+108,918
+              {{ data_box.main.extra.worldwide }}
             </div>
           </div>
         </div>
@@ -53,33 +53,33 @@
     </div>
     <div class="data-box-main-detailed-data">
       <div class="data-box-header">
-          상세현황
+          {{ sidebar.content.1.1 }}
       </div>
       <div class="data-box-main-detailed-container">
         <div class="data-box-main-detailed">
           <div class="data-box-main-detailed-title" style="padding-top:0px;">
-            보고타: {{ bogota.0}}명
+            {{ data_box.detailed.title.bogota }}
           </div>
           <div class="data-box-main-detailed-label">
-            완치자: 
+            {{ data_box.detailed.label.0 }}:
             <span class="main-recovered">
-            {{ bogota.2.0 }}
+            {{ data_box.detailed.count.bogota.0 }}
             </span>
-            / 무증상자: 
+            / {{ data_box.detailed.label.1 }}:
             <span class="main-mild">
-            {{ bogota.2.1 }}
+            {{ data_box.detailed.count.bogota.1 }}
             </span>
-            / 경증 환자: 
+            / {{ data_box.detailed.label.2 }}:
             <span class="main-severe">
-            {{ bogota.2.2 }}
+            {{ data_box.detailed.count.bogota.2 }}
             </span>
-            / 중증 환자: 
+            / {{ data_box.detailed.label.3 }}:
             <span class="main-critical">
-            {{ bogota.2.3 }}
+            {{ data_box.detailed.count.bogota.3 }}
             </span>
-            / 사망자: 
+            / {{ data_box.detailed.label.4 }}:
             <span class="main-deceased">
-            {{ bogota.2.4 }}
+            {{ data_box.detailed.count.bogota.4 }}
             </span>
           </div>
           <div id="main-bogota-graph" class="data-box-main-detailed-graph">
@@ -96,27 +96,27 @@
           </div>
           <script>
             var divs = document.getElementById("main-bogota-graph").children;
-            divs[0].style.width = "{{bogota.3.0}}"; 
-            divs[1].style.width = "{{bogota.3.1}}";
-            divs[2].style.width = "{{bogota.3.2}}";
-            divs[3].style.width = "{{bogota.3.3}}";
-            divs[4].style.width = "{{bogota.3.4}}";
+            divs[0].style.width = "{{ data_box.detailed.ratio.bogota.0 }}";
+            divs[1].style.width = "{{ data_box.detailed.ratio.bogota.1 }}";
+            divs[2].style.width = "{{ data_box.detailed.ratio.bogota.2 }}";
+            divs[3].style.width = "{{ data_box.detailed.ratio.bogota.3 }}";
+            divs[4].style.width = "{{ data_box.detailed.ratio.bogota.4 }}";
           </script>
           <div class="data-box-main-detailed-title">
-            국내: 43,682명
+            {{ data_box.detailed.title.national }}
           </div>
           <div class="data-box-main-detailed-label">
-            완치자: 
+            {{ data_box.detailed.label.0 }}: 
             <span class="main-recovered">
-            17,333
+            {{ data_box.detailed.count.national.0 }}
             </span>
-            / 격리자: 
+            / {{ data_box.detailed.label.5 }}: 
             <span class="main-mild">
-            25,096
+            {{ data_box.detailed.count.national.1 }}
             </span>
-            / 사망자: 
+            / {{ data_box.detailed.label.4 }}: 
             <span class="main-deceased">
-            1,433
+            {{ data_box.detailed.count.national.2 }}
             </span>
           </div>
           <div id="main-national-graph" class="data-box-main-detailed-graph" style="padding-bottom:0;">
@@ -128,26 +128,26 @@
             </div>
             <script>
             var divs = document.getElementById("main-national-graph").children;
-            divs[0].style.width = "39.52%"; 
-            divs[1].style.width = "57.22%";
-            divs[2].style.width = "3.27%";
+            divs[0].style.width = "{{ data_box.detailed.ratio.national.0 }}";
+            divs[1].style.width = "{{ data_box.detailed.ratio.national.1 }}";
+            divs[2].style.width = "{{ data_box.detailed.ratio.national.2 }}";
           </script>
           </div>
           <div class="data-box-main-detailed-title">
-            세계: 7,444,644명
+            {{ data_box.detailed.title.worldwide }}
           </div>
           <div class="data-box-main-detailed-label">
-            완치자: 
+            {{ data_box.detailed.label.0 }}: 
             <span class="main-recovered">
-            3,722,536
+            {{ data_box.detailed.count.worldwide.0 }}
             </span>
-            / 격리자: 
+            / {{ data_box.detailed.label.5 }}: 
             <span class="main-mild">
-            3,303,985
+            {{ data_box.detailed.count.worldwide.1 }}
             </span>
-            / 사망자: 
+            / {{ data_box.detailed.label.4 }}:  
             <span class="main-deceased">
-            418,123
+            {{ data_box.detailed.count.worldwide.2 }}
             </span>
           </div>
           <div id="main-worldwide-graph" class="data-box-main-detailed-graph" style="padding-bottom:0;">
@@ -159,10 +159,10 @@
             </div>
             <script>
             var divs = document.getElementById("main-worldwide-graph").children;
-            divs[0].style.width = "50.00%"; 
-            divs[1].style.width = "44.38%";
-            divs[2].style.width = "5.62%";
-          </script>
+            divs[0].style.width = "{{ data_box.detailed.ratio.worldwide.0 }}";
+            divs[1].style.width = "{{ data_box.detailed.ratio.worldwide.1 }}";
+            divs[2].style.width = "{{ data_box.detailed.ratio.worldwide.2 }}";
+            </script>
           </div>
         </div>
       </div>
@@ -171,21 +171,21 @@
   <div class="data-box-row">
     <div class="data-box-locality-data">
       <div class="data-box-header">
-        지역별 현황
+        {{ sidebar.content.1.3 }}
       </div>
       <div class="data-box-main-data-container">
         <div class="search-container">
           <div class="search">
             <i class="fas fa-search"></i>
-            <input id="case-search-input" class="search" type='text' placeholder='지역을 입력해주세요'/>
+            <input id="case-search-input" class="search" type='text' placeholder='{{ data_box.locality.placeholder }}'/>
           </div>
         </div>
         <div class="locality-update-filter-container">
           <div class="locality-update">
-            업데이트: {{ update }}
+            {{ navbar.update }}
           </div>
           <div class="locality-filter">
-            확진자 분포 내림차순
+            {{ data_box.locality.filter }}
           </div>
         </div>
         <div id="cases-list" class="cases-list-container">
@@ -194,30 +194,30 @@
               <div class="case-container-background">
                 <div class="case-container-header">
                   <span class="case-container-header-title">
-                    {{local.name}}: {{local.total}}명
+                    {{local.name}}: {{local.total}}{{ data_box.kr.unit }}
                   </span>
                   <span class="case-container-header-extra">
-                    (전일대비)+{{local.extra}}
+                    {{ data_box.kr.day_before }}+{{local.extra}}
                   </span>
                 </div>
                 <div class="data-box-main-detailed-label">
-                  완치자: 
+                  {{ data_box.detailed.label.0 }}: 
                   <span class="main-recovered">
                   {{ local.state.Recuperado }}
                   </span>
-                  / 무증상자: 
+                  / {{ data_box.detailed.label.1 }}: 
                   <span class="main-mild">
                   {{ local.state.Moderado }}
                   </span>
-                  / 경증 환자: 
+                  / {{ data_box.detailed.label.2 }}: 
                   <span class="main-severe">
                   {{ local.state.Severo }}
                   </span>
-                  / 중증 환자: 
+                  / {{ data_box.detailed.label.3 }}: 
                   <span class="main-critical">
                   {{ local.state.Crítico }}
                   </span>
-                  / 사망자: 
+                  / {{ data_box.detailed.label.4 }}: 
                   <span class="main-deceased">
                   {{ local.state.Fallecido }}
                   </span>
@@ -268,28 +268,28 @@
     </div>
     <div class="data-box-coronamap">
       <div class="data-box-header">
-        코로나맵
+        {{ data_box.map.header }}
       </div>
       <div class="data-box-main-detailed-container">
         <div class="coronamap-plot">
           {% autoescape off %}
-          {{ plot_div }}
+          {{ plot_div.0 }}
           {% endautoescape %}
         </div>
         <div class="update-container">
           <div class="update-box">
-            업데이트
+            {{ data_box.map.update_box }}
           </div>
           <div class="update-content">
-            {{ update }}
+            {{ navbar.update }}
           </div>
         </div>
         <div class="source-container">
           <div class="source-box">
-            출처
+            {{ data_box.map.source }}
           </div>
           <div class="source-content">
-            Subsecretaría de Salud Pública. Secretaría Distrital de Salud 2020
+            {{ data_box.map.source_content }}
           </div>
         </div>
       </div>

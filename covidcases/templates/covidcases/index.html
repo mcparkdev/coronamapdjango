@@ -3,7 +3,7 @@
 {% block language%}
           <div class="sidebar-item-content-container">
             <span class="sidebar-item-content"><a href="{% url "home_kr" %}" >Coreano</a></span>
-            <span class="sidebar-item-content"><a href="{% url "home" %}" >Español</a></span>
+            <span class="sidebar-item-content"><a href="{% url "home_spa" %}" >Español</a></span>
             <span class="sidebar-item-content"><a href="{% url "home_en" %}" >Inglés</a></span>
           </div>
 {% endblock %}
@@ -11,7 +11,7 @@
 {% block content %}
 <div class="data-box-containers">
   <div class="data-box-row">
-    <div class="data-box-main-data">
+    <div id="main-data" class="data-box-main-data">
       <div class="data-box-header">
         Datos Actuales
       </div>
@@ -51,7 +51,7 @@
         </div>
       </div>
     </div>
-    <div class="data-box-main-detailed-data">
+    <div id="detailed-data" class="data-box-main-detailed-data">
       <div class="data-box-header">
           Estado de pacientes
       </div>
@@ -169,7 +169,7 @@
     </div>
   </div>
   <div class="data-box-row">
-    <div class="data-box-locality-data">
+    <div id="locality-data" class="data-box-locality-data">
       <div class="data-box-header">
         Casos confirmados por localidad
       </div>
@@ -182,7 +182,7 @@
         </div>
         <div class="locality-update-filter-container">
           <div class="locality-update">
-            Actualizado: {{ update }}
+            Actualizado: {{ mavbar.1 }}
           </div>
           <div class="locality-filter">
             Decreciente (# de casos)
@@ -266,14 +266,14 @@
         </div>
       </div>
     </div>
-    <div class="data-box-coronamap">
+    <div id="map-data" class="data-box-coronamap">
       <div class="data-box-header">
         CoronaMap
       </div>
       <div class="data-box-main-detailed-container">
         <div class="coronamap-plot">
           {% autoescape off %}
-          {{ plot_div }}
+          {{ plot_div.0 }}
           {% endautoescape %}
         </div>
         <div class="update-container">
@@ -281,7 +281,7 @@
             Actualizado
           </div>
           <div class="update-content">
-            {{ update }}
+            {{ navbar.1 }}
           </div>
         </div>
         <div class="source-container">

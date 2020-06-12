@@ -1,0 +1,295 @@
+{% extends 'base_mobile.html' %}
+
+{% block language %}
+          <div class="sidebar-item-content-container" onclick="actionNav()">
+            <span class="sidebar-item-content"><a href="{% url "home_mobile_kr" %}" >{{ sidebar.content.4.0 }}</a></span>
+            <span class="sidebar-item-content"><a href="{% url "home_mobile_spa" %}">{{ sidebar.content.4.1 }}</a></span>
+            <span class="sidebar-item-content"><a href="{% url "home_mobile_en" %}" >{{ sidebar.content.4.2 }}</a></span>
+          </div>
+{% endblock %}
+
+{% block content %}
+<div class="data-box-containers">
+  <div id="main-data" class="data-box-main-data">
+    <div class="data-box-header">
+      {{ sidebar.content.1.0 }}
+    </div>
+    <div class="data-box-main-data-container">
+      <div class="data-box-main">
+        <div class="data-box-main-title">{{ data_box.main.title.bogota }}</div>
+        <div class="data-box-main-content">
+          <div class="data-box-main-content-total">
+            {{ data_box.main.total.bogota }}
+          </div>
+          <div class="data-box-main-content-extra">
+            {{ data_box.main.extra.bogota }}
+          </div>
+        </div>
+      </div>
+      <div class="data-box-main">
+        <div class="data-box-main-title">{{ data_box.main.title.national }}</div>
+        <div class="data-box-main-content">
+          <div class="data-box-main-content-total">
+            {{ data_box.main.total.national }}
+          </div>
+          <div class="data-box-main-content-extra">
+            {{ data_box.main.extra.national }}
+          </div>
+        </div>
+      </div>
+      <div class="data-box-main">
+        <div class="data-box-main-title">{{ data_box.main.title.worldwide }}</div>
+        <div class="data-box-main-content">
+          <div class="data-box-main-content-total">
+            {{ data_box.main.total.worldwide }}
+          </div>
+          <div class="data-box-main-content-extra">
+            {{ data_box.main.extra.worldwide }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="detailed-data" class="data-box-main-detailed-data">
+    <div class="data-box-header">
+        {{ sidebar.content.1.1 }}
+    </div>
+    <div class="data-box-main-detailed-container">
+      <div class="data-box-main-detailed">
+        <div class="data-box-main-detailed-title" style="padding-top:0px;">
+          {{ data_box.detailed.title.bogota }}
+        </div>
+        <div class="data-box-main-detailed-label">
+          {{ data_box.detailed.label.0 }}:
+          <span class="main-recovered">
+          {{ data_box.detailed.count.bogota.0 }}
+          </span>
+          / {{ data_box.detailed.label.1 }}:
+          <span class="main-mild">
+          {{ data_box.detailed.count.bogota.1 }}
+          </span>
+          / {{ data_box.detailed.label.2 }}:
+          <span class="main-severe">
+          {{ data_box.detailed.count.bogota.2 }}
+          </span>
+          / {{ data_box.detailed.label.3 }}:
+          <span class="main-critical">
+          {{ data_box.detailed.count.bogota.3 }}
+          </span>
+          / {{ data_box.detailed.label.4 }}:
+          <span class="main-deceased">
+          {{ data_box.detailed.count.bogota.4 }}
+          </span>
+        </div>
+        <div id="main-bogota-graph" class="data-box-main-detailed-graph">
+          <div class="main-recovered-graph">
+          </div>
+          <div class="main-mild-graph">
+          </div>
+          <div class="main-severe-graph">
+          </div>
+          <div class="main-critical-graph">
+          </div>
+          <div class="main-deceased-graph">
+          </div>
+        </div>
+        <script>
+          var divs = document.getElementById("main-bogota-graph").children;
+          divs[0].style.width = "{{ data_box.detailed.ratio.bogota.0 }}";
+          divs[1].style.width = "{{ data_box.detailed.ratio.bogota.1 }}";
+          divs[2].style.width = "{{ data_box.detailed.ratio.bogota.2 }}";
+          divs[3].style.width = "{{ data_box.detailed.ratio.bogota.3 }}";
+          divs[4].style.width = "{{ data_box.detailed.ratio.bogota.4 }}";
+        </script>
+        <div class="data-box-main-detailed-title">
+          {{ data_box.detailed.title.national }}
+        </div>
+        <div class="data-box-main-detailed-label">
+          {{ data_box.detailed.label.0 }}: 
+          <span class="main-recovered">
+          {{ data_box.detailed.count.national.0 }}
+          </span>
+          / {{ data_box.detailed.label.5 }}: 
+          <span class="main-mild">
+          {{ data_box.detailed.count.national.1 }}
+          </span>
+          / {{ data_box.detailed.label.4 }}: 
+          <span class="main-deceased">
+          {{ data_box.detailed.count.national.2 }}
+          </span>
+        </div>
+        <div id="main-national-graph" class="data-box-main-detailed-graph" style="padding-bottom:0;">
+          <div class="main-recovered-graph">
+          </div>
+          <div class="main-mild-graph">
+          </div>
+          <div class="main-deceased-graph">
+          </div>
+          <script>
+          var divs = document.getElementById("main-national-graph").children;
+          divs[0].style.width = "{{ data_box.detailed.ratio.national.0 }}";
+          divs[1].style.width = "{{ data_box.detailed.ratio.national.1 }}";
+          divs[2].style.width = "{{ data_box.detailed.ratio.national.2 }}";
+        </script>
+        </div>
+        <div class="data-box-main-detailed-title">
+          {{ data_box.detailed.title.worldwide }}
+        </div>
+        <div class="data-box-main-detailed-label">
+          {{ data_box.detailed.label.0 }}: 
+          <span class="main-recovered">
+          {{ data_box.detailed.count.worldwide.0 }}
+          </span>
+          / {{ data_box.detailed.label.5 }}: 
+          <span class="main-mild">
+          {{ data_box.detailed.count.worldwide.1 }}
+          </span>
+          / {{ data_box.detailed.label.4 }}:  
+          <span class="main-deceased">
+          {{ data_box.detailed.count.worldwide.2 }}
+          </span>
+        </div>
+        <div id="main-worldwide-graph" class="data-box-main-detailed-graph" style="padding-bottom:0;">
+          <div class="main-recovered-graph">
+          </div>
+          <div class="main-mild-graph">
+          </div>
+          <div class="main-deceased-graph">
+          </div>
+          <script>
+          var divs = document.getElementById("main-worldwide-graph").children;
+          divs[0].style.width = "{{ data_box.detailed.ratio.worldwide.0 }}";
+          divs[1].style.width = "{{ data_box.detailed.ratio.worldwide.1 }}";
+          divs[2].style.width = "{{ data_box.detailed.ratio.worldwide.2 }}";
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="locality-data" class="data-box-locality-data">
+    <div class="data-box-header">
+      {{ sidebar.content.1.2 }}
+    </div>
+    <div class="data-box-main-data-container">
+      <div class="search-container">
+        <div class="search">
+          <i class="fas fa-search"></i>
+          <input id="case-search-input" class="search" type='text' placeholder='{{ data_box.locality.placeholder }}'/>
+        </div>
+      </div>
+      <div class="locality-update-filter-container">
+        <div class="locality-update">
+          {{ navbar.update }}
+        </div>
+        <div class="locality-filter">
+          {{ data_box.locality.filter }}
+        </div>
+      </div>
+      <div id="cases-list" class="cases-list-container">
+        {% for local in locality %}
+          <div id="case-container" class="case-container">
+            <div class="case-container-background">
+              <div class="case-container-header">
+                <span class="case-container-header-title">
+                  {{local.name}}: {{local.total}}{{ data_box.kr.unit }}
+                </span>
+                <span class="case-container-header-extra">
+                  {{ data_box.kr.day_before }}+{{local.extra}}
+                </span>
+              </div>
+              <div class="data-box-main-detailed-label">
+                {{ data_box.detailed.label.0 }}: 
+                <span class="main-recovered">
+                {{ local.state.Recuperado }}
+                </span>
+                / {{ data_box.detailed.label.1 }}: 
+                <span class="main-mild">
+                {{ local.state.Moderado }}
+                </span>
+                / {{ data_box.detailed.label.2 }}: 
+                <span class="main-severe">
+                {{ local.state.Severo }}
+                </span>
+                / {{ data_box.detailed.label.3 }}: 
+                <span class="main-critical">
+                {{ local.state.Crítico }}
+                </span>
+                / {{ data_box.detailed.label.4 }}: 
+                <span class="main-deceased">
+                {{ local.state.Fallecido }}
+                </span>
+              </div>
+              <div id="{{local.id}}" class="data-box-main-detailed-graph">
+                <div class="main-recovered-graph">
+                </div>
+                <div class="main-mild-graph">
+                </div>
+                <div class="main-severe-graph">
+                </div>
+                <div class="main-critical-graph">
+                </div>
+                <div class="main-deceased-graph">
+                </div>
+              </div>
+              <script>
+                var divs = document.getElementById("{{local.id}}").children;
+                divs[0].style.width = "{{ local.state_ratio.Recuperado }}"; 
+                divs[1].style.width = "{{ local.state_ratio.Moderado }}"; 
+                divs[2].style.width = "{{ local.state_ratio.Severo }}"; 
+                divs[3].style.width = "{{ local.state_ratio.Crítico }}"; 
+                divs[4].style.width = "{{ local.state_ratio.Fallecido }}"; 
+              </script>
+            </div>
+          </div>
+        {% endfor %}
+        <script>
+          $("#case-search-input").keyup(function() {
+            var val = $(this).val().toUpperCase();
+            console.log(val);
+            $('.case-container-header-title').each(function() {
+              var parent = $(this).parents('div.case-container');
+              length = $(this).text().length > 0;
+              if (length && $(this).text().toUpperCase().trim().indexOf(val) < 0)
+              {
+                      parent.hide();
+              }
+              else
+              {
+                      parent.show();
+              }
+            });
+          });
+        </script>
+      </div>
+    </div>
+  </div>
+  <div id="map-data" class="data-box-coronamap">
+    <div class="data-box-header">
+      {{ data_box.map.header }}
+    </div>
+    <div class="data-box-main-detailed-container">
+      <div class="coronamap-plot">
+        {% autoescape off %}
+        {{ plot_div.0 }}
+        {% endautoescape %}
+      </div>
+      <div class="update-container">
+        <div class="update-box">
+          {{ data_box.map.update_box }}
+        </div>
+        <div class="update-content">
+          {{ navbar.update }}
+        </div>
+      </div>
+      <div class="source-container">
+        <div class="source-box">
+          {{ data_box.map.source }}
+        </div>
+        <div class="source-content">
+          {{ data_box.map.source_content }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

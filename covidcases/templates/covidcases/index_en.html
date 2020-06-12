@@ -3,7 +3,7 @@
 {% block language%}
           <div class="sidebar-item-content-container">
             <span class="sidebar-item-content"><a href="{% url "home_kr" %}" >Korean</a></span>
-            <span class="sidebar-item-content"><a href="{% url "home" %}" >Spanish</a></span>
+            <span class="sidebar-item-content"><a href="{% url "home_spa" %}" >Spanish</a></span>
             <span class="sidebar-item-content"><a href="{% url "home_en" %}" >English</a></span>
           </div>
 {% endblock %}
@@ -273,7 +273,7 @@
       <div class="data-box-main-detailed-container">
         <div class="coronamap-plot">
           {% autoescape off %}
-          {{ plot_div }}
+          {{ plot_div.0 }}
           {% endautoescape %}
         </div>
         <div class="update-container">

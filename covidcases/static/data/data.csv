@@ -1,0 +1,5 @@
+﻿state,worldwide_state,worldwide_state_ratio,worldwide_extra,national_state,national_state_ratio,national_extra
+recovered,"3,835,183",50.57%,"136,757","17,790",39.35%,"1,604"
+active,"3,325,639",43.85%,"136,757","25,934",57.36%,"1,604"
+deaths,"423,086",5.58%,"136,757","1,488",3.29%,"1,604"
+confirmed,"7,583,908",100.00%,"136,757","45,212",100.00%,"1,604"

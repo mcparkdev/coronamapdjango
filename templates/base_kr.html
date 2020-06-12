@@ -4,26 +4,24 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <script src='https://kit.fontawesome.com/c939d0e917.js'></script>
-    <title>코로나맵 보고타</title>
+    <title>{{ title }}</title>
     <script src="{% static 'js/index.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/style_kr.css' %}">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
   </head>
     <body>
   <div class="navbar">
     <div class="navbar-title">
       <i class="fas fa-shield-virus"></i>
-      <strong>보고타: 코로나-19</strong>
+      <strong>{{ navbar.title }}</strong>
     </div>
     <div class="navbar-update-language">
       <div class="navbar-update">
-        UPDATE: 10.6.20, 0:00 시
+        {{ navbar.update }}
       </div>
       <div class="navbar-language">
-        언어: 한국어
+        {{ navbar.language }}
       </div>
     </div>
   </div>
@@ -31,44 +29,45 @@
     <div class="sidebar">
       <div class="sidebar-items-container">
         <div class="sidebar-title">
-          홈
+          {{ sidebar.title }}
           <i class="fas fa-bars"></i>
         </div>
         <div class="sidebar-item">
           <div class="sidebar-item-header">
             <i class="fas fa-home"></i>
-            핵심내용
+            {{ sidebar.header.1 }}
           </div>
           <div class="sidebar-item-content-container">
-            <span class="sidebar-item-content">현황</span>
-            <span class="sidebar-item-content">상세현황</span>
-            <span class="sidebar-item-content">지역별 현황</span>
-            <span class="sidebar-item-content">코로나맵</span>
+            <span class="sidebar-item-content">{{ sidebar.content.1.0 }}</span>
+            <span class="sidebar-item-content">{{ sidebar.content.1.1 }}</span>
+            <span class="sidebar-item-content">{{ sidebar.content.1.2 }}</span>
+            <span class="sidebar-item-content">{{ sidebar.content.1.3 }}</span>
           </div>
         </div>
         <div class="sidebar-item">
           <div class="sidebar-item-header">
             <i class="fas fa-hospital-alt"></i>
-            병원
+            {{ sidebar.header.2 }}
           </div>
           <div class="sidebar-item-content-container">
-            <span class="sidebar-item-content">사용 가능 여부</span>
-            <span class="sidebar-item-content">ICU 병원</span>
+            <span class="sidebar-item-content">{{ sidebar.content.2.0 }}</span>
+            <span class="sidebar-item-content">{{ sidebar.content.2.1 }}</span>
           </div>
         </div>
         <div class="sidebar-item">
           <div class="sidebar-item-header">
             <i class="fas fa-donate"></i>
-            기부
+            {{ sidebar.header.3 }}
           </div>
           <div class="sidebar-item-content-container">
-            <span class="sidebar-item-content">연락처</span>
+            <span class="sidebar-item-content">{{ sidebar.content.3.0 }}</span>
+            <span class="sidebar-item-content">{{ sidebar.content.3.1 }}</span>
           </div>
         </div>
         <div class="sidebar-item">
           <div class="sidebar-item-header">
             <i class="fas fa-language"></i>
-            언어
+            {{ sidebar.header.4 }}
           </div>
           {% block language %}
           {% endblock %}
@@ -76,10 +75,10 @@
       </div>
       <div class="footer">
         <span class="developer">
-          개발자: 박민창
+          {{ footer.developer }}
         </span>
         <span class="email">
-          이메일: mc.park@uniandes.edu.co
+          {{ footer.email }}
         </span>
       </div>
     </div>

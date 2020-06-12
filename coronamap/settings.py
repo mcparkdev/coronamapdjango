@@ -172,9 +172,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_LOCATION = 'static'
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, "covidcases/static"),
-# ]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "covidcases/static"),
+]
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
