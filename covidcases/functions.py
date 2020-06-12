@@ -289,7 +289,7 @@ def give_age_sex_graph(lang="spa"):
         margin = go.layout.Margin(
             l=20, r=10, t=0, b=30,
         ),
-        legend=dict(x=0.72, y=1),
+        legend=dict(x=0.4, y=1),
     )
     plot_div = plot(fig,
                 output_type='div',include_plotlyjs=False,
@@ -341,7 +341,7 @@ def give_sidebar(lang="spa"):
             "4":"Idioma"
         },
         "content":{
-            "1": ["Datos Actuales", "Estado de pacientes", "Casos por localidad","CoronaMap"],
+            "1": ["Datos Actuales", "Estado de pacientes", "Casos por localidad","CoronaMap","Casos por edad y sexo"],
             "2": ["Hacinación", "Hospitales UCI"],
             "3": ["Voluntario", "Donación"],
             "4": ["Coreano", "Español", "Inglés"],
@@ -356,7 +356,7 @@ def give_sidebar(lang="spa"):
             "4":"언어"
         },
         "content":{
-            "1": ["현황", "상세현황", "지역별 현황","코로나맵"],
+            "1": ["현황", "상세현황", "지역별 현황","코로나맵","성별&연령대별 분석"],
             "2": ["사용 가능 여부", "ICU 병원"],
             "3": ["지원", "기부"],
             "4": ["한국어", "스페인어", "영어"],
@@ -371,7 +371,7 @@ def give_sidebar(lang="spa"):
             "4":"Language",
         },
         "content":{
-            "1": ["Today's Data", "Patient's state", "Case by Locality","CoronaMap"],
+            "1": ["Today's Data", "Patient's state", "Cases by Locality","CoronaMap","Cases by age & sex"],
             "2": ["Availability", "ICU Hospitals"],
             "3": ["Volunteer", "Donation"],
             "4": ["Korean","Spanish","English"],

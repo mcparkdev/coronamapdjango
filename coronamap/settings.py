@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECRET_KEY = 'f_czj1_7415fk!uru8h8io#e4lbt%lbrkwj)3+@^v=w%%dpt+5'
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'f_czj1_7415fk!uru8h8io#e4lbt%lbrkwj)3+@^v=w%%dpt+5')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 # DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = ['localhost','https://coronamapbogota.herokuapp.com/']
@@ -170,7 +170,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_LOCATION = 'static'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "covidcases/static"),

@@ -291,5 +291,33 @@
       </div>
     </div>
   </div>
+  <div id="age-sex-data" class="data-box-age-sex-graph">
+    <div class="data-box-header">
+      {{ sidebar.content.1.4 }}
+    </div>
+    <div class="data-box-main-detailed-container">
+      <div class="coronamap-plot">
+        {% autoescape off %}
+          {{ plot_div.1 }}
+        {% endautoescape %}
+      </div>
+      <div class="update-container">
+        <div class="update-box">
+          {{ data_box.map.update_box }}
+        </div>
+        <div class="update-content">
+          {{ navbar.update }}
+        </div>
+      </div>
+      <div class="source-container">
+        <div class="source-box">
+          {{ data_box.map.source }}
+        </div>
+        <div class="source-content">
+          {{ data_box.map.source_content }}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}
