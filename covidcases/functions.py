@@ -69,7 +69,7 @@ data_file_yesterday = 'staticfiles/data/yesterday.csv'
 # data_file_yesterday = 'yesterday.csv'
 #%%
 def read_csv(datafile, fix=True):
-    data_df = pd.read_csv(datafile, skiprows=4,sep=';', skipfooter=2, engine="python")
+    data_df = pd.read_csv(datafile, skiprows=4,sep=';', skipfooter=2, engine="python", encoding='utf8')
     if fix:
         fix_df(data_df) 
     return data_df
@@ -411,18 +411,9 @@ def give_data_box(lang="spa"):
     # Detailed Data
     bogota_state = give_bogota_state()
     bogota_state_ratio = give_bogota_state('ratio')
-    # national_state = ["17,333","25,096","1,433"]
-    # national_state_ratio = ["39.52%","57.22%","3.27%"]
-    # worldwide_state = ["3,722,536","3,303,985","418,123"]
-    # worldwide_state_ratio = ["50.00%","44.38%","5.62%"]
 
     # Data by locality
     locality_state_list = give_list_locality_state_ratio()
-    # Data by age & sex
-    # national_total = "43,682"
-    # national_extra = "1,359"
-    # worldwide_total = "7,145,539"
-    # worldwide_extra = "108,918"
 
     df_nw = pd.read_csv("staticfiles/data/data.csv")
     national_total = df_nw['national_state'][3]
