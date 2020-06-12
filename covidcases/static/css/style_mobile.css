@@ -1,8 +1,6 @@
-html { height:100%; overflow:hidden; }
 body {
     font-family: Helvetica, sans-serif;
     height: 100%;
-    overflow:hidden; 
     margin: 0;
     padding: 0;
     display:flex;
@@ -18,7 +16,6 @@ body {
     --critical-color: #F56527;
     --deceased-color: #FF2E1F;
 }
-
 
 .navbar {
     overflow: hidden;
