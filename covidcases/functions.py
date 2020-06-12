@@ -182,7 +182,7 @@ def give_plot_div(lang="spa"):
     language = switcher.get(lang, "Invalid language")
     df_zip = give_df_zip()
     fig = px.choropleth_mapbox(df_zip, geojson=give_json_file(), locations='ZIP', color='count',
-                            color_continuous_scale="balance",
+                            color_continuous_scale="OrRd",
                             range_color=(min(df_zip['count']), max(df_zip['count'])),
                             mapbox_style="carto-positron",
                             hover_name="locality",

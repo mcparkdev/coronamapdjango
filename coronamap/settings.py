@@ -22,8 +22,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECRET_KEY = 'f_czj1_7415fk!uru8h8io#e4lbt%lbrkwj)3+@^v=w%%dpt+5'
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'f_czj1_7415fk!uru8h8io#e4lbt%lbrkwj)3+@^v=w%%dpt+5')
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+DEBUG = False
+# DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = ['localhost','https://coronamapbogota.herokuapp.com/']
 

@@ -450,6 +450,7 @@ body {
     display:flex;
     flex-direction: column;
     overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
 }
 
 .case-container{
