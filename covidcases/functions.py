@@ -69,7 +69,7 @@ data_file_yesterday = 'staticfiles/data/yesterday.csv'
 # data_file_yesterday = 'yesterday.csv'
 #%%
 def read_csv(datafile, fix=True):
-    data_df = pd.read_csv(datafile, skiprows=4,sep=';', skipfooter=2, engine="python", encoding='utf8')
+    data_df = pd.read_csv(datafile, skiprows=4,sep=';', skipfooter=2, engine="python")
     if fix:
         fix_df(data_df) 
     return data_df
