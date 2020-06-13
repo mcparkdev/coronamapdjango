@@ -158,7 +158,8 @@ def give_list_locality_state_ratio(sortby = 'count', ascending=False):
         try:
             df_temp = df_locality_state[df_locality_state['locality']==name]
             df_temp['ratio'] = df_temp['count']/sum(df_temp['count'])
-            df_temp['state'] = pd.Categorical(df_temp['state'], ["Recuperado","Moderado","Severo","Crítico","Fallecido","Fallecido (no aplica, no causa directa)"])
+            df_temp_copy = copy.deepcopy(df_temp)
+            df_temp['state'] = pd.Categorical(df_temp_copy['state'], ["Recuperado","Moderado","Severo","Crítico","Fallecido"])
             df_temp = df_temp.sort_values("state")
             df_temp['ratio'] = pd.Series(["{0:.2f}%".format(val * 100) for val in df_temp['ratio']], index = df_temp.index)
             total_dict = give_df('locality').set_index('locality').to_dict()['count']
@@ -727,7 +728,7 @@ def give_data_box(lang="spa"):
 #%%
 
 def give_markdown():
-    markdowntext = open('staticfiles/md/6_11.md', encoding="utf8").read()
+    markdowntext = open('staticfiles/md/6_13.md', encoding="utf8").read()
     return markdowntext
 #%%
 def give_context(lang="spa"):
