@@ -340,5 +340,93 @@
       </div>
     </div>
   </div>
+  <div class="data-box-row">
+    <div id="hospital-general-data" class="data-box-hospital">
+      <div class="data-box-header">
+        {{ sidebar.content.2.0 }}
+      </div>
+      <div class="data-box-main-detailed-container">
+        <div class="coronamap-plot">
+          {% autoescape off %}
+            {{ plot_div.2 }}
+          {% endautoescape %}
+        </div>
+        <div class="update-container">
+          <div class="update-box">
+            {{ data_box.map.update_box }}
+          </div>
+          <div class="update-content">
+            {{ navbar.update }}
+          </div>
+        </div>
+        <div class="source-container">
+          <div class="source-box">
+            {{ data_box.map.source }}
+          </div>
+          <div class="source-content">
+            {{ data_box.map.source_content }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="hospital-IMCU-data" class="data-box-hospital">
+      <div class="data-box-header">
+        {{ sidebar.content.2.1 }}
+      </div>
+      <div class="data-box-main-detailed-container">
+        <div class="coronamap-plot">
+          {% autoescape off %}
+            {{ plot_div.3 }}
+          {% endautoescape %}
+        </div>
+        <div class="update-container">
+          <div class="update-box">
+            {{ data_box.map.update_box }}
+          </div>
+          <div class="update-content">
+            {{ navbar.update }}
+          </div>
+        </div>
+        <div class="source-container">
+          <div class="source-box">
+            {{ data_box.map.source }}
+          </div>
+          <div class="source-content">
+            {{ data_box.map.source_content }}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% comment %} </div> {% endcomment %}
+  {% comment %} <div class="data-box-row"> {% endcomment %}
+    <div id="hospital-ICU-data" class="data-box-hospital">
+      <div class="data-box-header">
+        {{ sidebar.content.2.2 }}
+      </div>
+      <div class="data-box-main-detailed-container">
+        <div class="coronamap-plot">
+          {% autoescape off %}
+            {{ plot_div.4 }}
+          {% endautoescape %}
+        </div>
+        <div class="update-container">
+          <div class="update-box">
+            {{ data_box.map.update_box }}
+          </div>
+          <div class="update-content">
+            {{ navbar.update }}
+          </div>
+        </div>
+        <div class="source-container">
+          <div class="source-box">
+            {{ data_box.map.source }}
+          </div>
+          <div class="source-content">
+            {{ data_box.map.source_content }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

@@ -50,8 +50,9 @@
           {{ sidebar.header.2 }}
         </div>
         <div class="sidebar-item-content-container" onclick="actionNav()">
-          <span class="sidebar-item-content">{{ sidebar.content.2.0 }}</span>
-          <span class="sidebar-item-content">{{ sidebar.content.2.1 }}</span>
+          <span class="sidebar-item-content" onclick="smoothScroll('hospital-general-data')" >{{ sidebar.content.2.0 }}</span>
+          <span class="sidebar-item-content" onclick="smoothScroll('hospital-IMCU-data')" >{{ sidebar.content.2.1 }}</span>
+          <span class="sidebar-item-content" onclick="smoothScroll('hospital-ICU-data')" >{{ sidebar.content.2.2 }}</span>
         </div>
       </div>
       <div class="sidebar-item">
@@ -62,6 +63,7 @@
         <div class="sidebar-item-content-container" onclick="actionNav()">
           <span class="sidebar-item-content">{{ sidebar.content.3.0 }}</span>
           <span class="sidebar-item-content">{{ sidebar.content.3.1 }}</span>
+          <span class="sidebar-item-content">{{ sidebar.content.3.2 }}</span>
         </div>
       </div>
       <div class="sidebar-item" >

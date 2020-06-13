@@ -9,6 +9,7 @@ import numpy as np
 import operator
 import pandas as pd
 from plotly.offline import plot
+import copy
 
 localities = {
     "Antonio Nariño": [1115,1],
@@ -69,7 +70,7 @@ data_file_yesterday = 'staticfiles/data/yesterday.csv'
 # data_file_yesterday = 'yesterday.csv'
 #%%
 def read_csv(datafile, fix=True):
-    data_df = pd.read_csv(datafile, skiprows=4,sep=';', skipfooter=2, engine="python", encoding="Latin-1")
+    data_df = pd.read_csv(datafile, skiprows=4,sep=';', skipfooter=2, engine="python", encoding="utf-8")
     if fix:
         fix_df(data_df) 
     return data_df
@@ -78,17 +79,20 @@ def read_csv(datafile, fix=True):
 def fix_df(data):
     column_names = ['caseID',"date","city","locality","age","sex","type","place","state"]
     data.columns = column_names
-    data['state'] = data['state'].str.strip()
-    data['state'] = data['state'].str.capitalize()
-    data.loc[data['state'] == "Fallecido (no aplica, no causa directa)", 'state'] = "Fallecido"
     date_list =[]
     date_raw = data['date'].tolist()
+    data['state'] = data['state'].str.strip()
+    data['state'] = data['state'].str.capitalize()
+    data['state'] = data['state'].str.replace(",,","")
+    data_copy = copy.deepcopy(data)
+    data.loc[data_copy['state'] == "Fallecido (no aplica, no causa directa)", 'state'] = "Fallecido"
     for i in range(0, len(data)):
         date_fixed = date_raw[i].split("/")
         date_fixed.reverse()
         date_fixed = "-".join(date_fixed)
         date_list.append(date_fixed)
     data['date'] = date_list
+    
 #%%
 df = read_csv(data_file_today)
 df_yesterday = read_csv(data_file_yesterday)
@@ -214,7 +218,7 @@ def give_bogota_state(format = "count"):
     }
     return switcher.get(format, "Invalid property")
 #%%
-update_day = "11"
+update_day = "12"
 update_month = "06"
 update_year = "2020"
 
@@ -297,6 +301,114 @@ def give_age_sex_graph(lang="spa"):
     return plot_div
 
 #%%
+def give_hospital_availability(lang="spa", hospital_type="general"):
+    hospital = pd.read_csv('staticfiles/data/uci.csv', encoding='Latin-1', decimal=',',thousands='.')
+
+    hospital_general_public = hospital.query("(IPS=='Públicas') & (Servicio=='Hospitalización General')").reset_index()
+    hospital_general_private = hospital.query("(IPS=='Privadas') & (Servicio=='Hospitalización General')").reset_index()
+
+    hospital_intermediate_public = hospital.query("(IPS=='Públicas') & (Servicio=='Unidad de Cuidado Intermedio')").reset_index()
+    hospital_intermediate_private = hospital.query("(IPS=='Privadas') & (Servicio=='Unidad de Cuidado Intermedio')").reset_index()
+
+    hospital_intensive_public = hospital.query("(IPS=='Públicas') & (Servicio=='Unidad de cuidado intensivo')").reset_index()
+    hospital_intensive_private = hospital.query("(IPS=='Privadas') & (Servicio=='Unidad de cuidado intensivo')").reset_index()
+    
+    switcher_hospital = {
+        "general":{
+            "public": hospital_general_public,
+            "private": hospital_general_private,
+        },
+        "IMCU": {
+            "public": hospital_intermediate_public,
+            "private": hospital_intermediate_private,
+        },
+        "ICU": {
+            "public": hospital_intensive_public,
+            "private": hospital_intensive_private,
+        },
+    }
+
+    hospital_df = switcher_hospital.get(hospital_type, "Invalid language")
+
+    switcher_lang = {
+        "spa": {
+            "type": ["Público","Privado"],
+            "service": ['General','UCIM','UCI'],
+            "group": ["Neonatal","Pediátrico","Adulto"],
+            "hover": 'Ocupadas: {}/{}<br>Disponibles: {}',
+        },
+        "en": {
+            "type": ["Public","Private"],
+            "service": ['General','IMCU','ICU'],
+            "group": ["Neonatal","Pediatric","Adult"],
+            "hover": 'Occupied: {}/{}<br>Available: {}',
+        },
+        "kr": {
+            "type": ["공공","민간"],
+            "service": ['일반','IMCU','ICU'],
+            "group": ["신생아","소아과","성인"],
+            "hover": '사용 중: {}/{}<br>사용 가능: {}',
+        },
+    }
+
+    info = switcher_lang.get(lang, "Invalid language")
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatterpolar(
+        r=hospital_df['public']['Porcentaje de Ocupación'],
+        theta=info['group'],
+        fill='toself',
+        name=info['type'][0],
+        text = [info['hover'].format(
+            hospital_df['public']['Camas Ocupadas'][i],
+            hospital_df['public']['Camas habilitadas'][i],
+            hospital_df['public']['Camas disponibles'][i],
+            ) for i in range (0,len(hospital_df['public']))],
+        hovertemplate = '%{text}',
+        ),
+        
+    )
+    fig.add_trace(go.Scatterpolar(
+        r=hospital_df['private']['Porcentaje de Ocupación'],
+        theta=info['group'],
+        fill='toself',
+        name=info['type'][1],
+        text = [info['hover'].format(
+            hospital_df['private']['Camas Ocupadas'][i],
+            hospital_df['private']['Camas habilitadas'][i],
+            hospital_df['private']['Camas disponibles'][i],
+            ) for i in range (0,len(hospital_df['private']))],
+        hovertemplate = '%{text}',
+        ),
+    )
+
+    fig.update_layout(
+        polar=dict(
+            radialaxis=dict(
+            visible=True,
+            range=[0, 100]
+            )),
+        showlegend=True,
+        template = "plotly_white",
+        legend = dict(x=0.5, y=0.8),
+        legend_orientation="h",
+        hovermode = 'x',
+        margin = go.layout.Margin(
+                l=55, r=55, t=0, b=0,
+            ),
+        autosize=True,
+        # height=210,
+        # width=300,
+    )
+
+    plot_div = plot(fig,
+                output_type='div',include_plotlyjs=False,
+                show_link=False, link_text="", config={'displayModeBar': False})
+    return plot_div
+
+
+
+#%%
 
 def give_title(lang="spa"):
     switcher = {
@@ -331,19 +443,20 @@ def give_navbar(lang="spa"):
 
     return navbar
 #%%
+
 def give_sidebar(lang="spa"):
     sidebar_spa = {
         "title": "Home",
         "header": {
             "1":"Datos Principales",
-            "2":"Hospitales",
+            "2":"Ocupación Hospitalización",
             "3":"Apoyo",
             "4":"Idioma"
         },
         "content":{
             "1": ["Datos Actuales", "Estado de pacientes", "Casos por localidad","CoronaMap","Casos por edad y sexo", "한인회 공지"],
-            "2": ["Hacinación", "Hospitales UCI"],
-            "3": ["Voluntario", "Donación"],
+            "2": ["General","UCIM","UCI"],
+            "3": ["Apoyo voluntario","Retroalimentación", "Donación"],
             "4": ["Coreano", "Español", "Inglés"],
         },
     }
@@ -351,14 +464,14 @@ def give_sidebar(lang="spa"):
         "title": "홈",
         "header": {
             "1":"핵심내용",
-            "2":"병원",
+            "2":"병원침대 사용 여부",
             "3":"도움 지원",
             "4":"언어"
         },
         "content":{
             "1": ["현황", "상세현황", "지역별 현황","코로나맵","성별&연령대별 분석","한인회 공지"],
-            "2": ["사용 가능 여부", "ICU 병원"],
-            "3": ["지원", "기부"],
+            "2": ["일반","IMCU","ICU"],
+            "3": ["지원", "피드백", "기부"],
             "4": ["한국어", "스페인어", "영어"],
         },
     }
@@ -366,14 +479,14 @@ def give_sidebar(lang="spa"):
         "title": "Home",
         "header": {
             "1":"Main Data",
-            "2":"Hospitals",
+            "2":"Hospital Bed Occupancy Rate",
             "3":"Support",
             "4":"Language",
         },
         "content":{
             "1": ["Today's Data", "Patient's state", "Cases by Locality","CoronaMap","Cases by age & sex","한인회 공지"],
-            "2": ["Availability", "ICU Hospitals"],
-            "3": ["Volunteer", "Donation"],
+            "2": ["General","IMCU","ICU"],
+            "3": ["Volunteer", "Feedback", "Donation"],
             "4": ["Korean","Spanish","English"],
         },
     }
@@ -383,7 +496,6 @@ def give_sidebar(lang="spa"):
         "kr"  : sidebar_kr,
     }
     return switcher.get(lang,"Invalid language")
-
 
 #%%
 def give_footer(lang="spa"):
@@ -634,7 +746,7 @@ def give_context(lang="spa"):
         'footer': give_footer(lang),
         'data_box': give_data_box(lang),
         'covid_cases': give_data_dict('locality'),
-        'plot_div': [give_plot_div(lang), give_age_sex_graph(lang)],
+        'plot_div': [give_plot_div(lang), give_age_sex_graph(lang), give_hospital_availability(lang,"general"), give_hospital_availability(lang,"IMCU"), give_hospital_availability(lang,"ICU")],
         'locality': locality_state_list,
         'md' : give_markdown(),
     }

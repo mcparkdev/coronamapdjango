@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'covidcases.apps.CovidcasesConfig',
+    'debug_toolbar',
     'markdownify',
 ]
 
@@ -49,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'coronamap.urls'
@@ -203,6 +205,9 @@ MARKDOWNIFY_WHITELIST_TAGS = [
   'hr'
 ]
 
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
