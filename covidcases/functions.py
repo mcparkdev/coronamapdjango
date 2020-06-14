@@ -12,48 +12,49 @@ from plotly.offline import plot
 import copy
 
 localities = {
-    "Antonio Nariño": [1115,1],
-    "Barrios Unidos": [1112,2],
-    "Bosa": [1107,4],
-    "Chapinero": [1102,3],
-    "Ciudad Bolívar": [1119,8],
-    "Engativá": [1110,7],
-    "Fontibón": [1109,3],
-    "Kennedy": [1108,8],
-    "La Candelaria": [1117,1],
-    "Los Mártires": [1114,1],
-    "Puente Aranda": [1116,3],
-    "Rafael Uribe Uribe": [1118,4],
-    "San Cristóbal": [1104,4],
-    "Santa Fe": [1103,2],
-    "Suba": [1111,10],
-    "Sumapaz": [1120,4],
-    "Teusaquillo": [1113,2],
-    "Tunjuelito": [1106,2],
-    "Usaquén": [1101,5],
-    "Usme": [1105,7],
+    "Antonio Nariño": [1115, 1],
+    "Barrios Unidos": [1112, 2],
+    "Bosa": [1107, 4],
+    "Chapinero": [1102, 3],
+    "Ciudad Bolívar": [1119, 8],
+    "Engativá": [1110, 7],
+    "Fontibón": [1109, 3],
+    "Kennedy": [1108, 8],
+    "La Candelaria": [1117, 1],
+    "Los Mártires": [1114, 1],
+    "Puente Aranda": [1116, 3],
+    "Rafael Uribe Uribe": [1118, 4],
+    "San Cristóbal": [1104, 4],
+    "Santa Fe": [1103, 2],
+    "Suba": [1111, 10],
+    "Sumapaz": [1120, 4],
+    "Teusaquillo": [1113, 2],
+    "Tunjuelito": [1106, 2],
+    "Usaquén": [1101, 5],
+    "Usme": [1105, 7],
 }
 
 names = [*localities]
 zip_locality_list = []
 ziplist = []
 zipnames = []
-zip = '{0}{1}1'
+zip = "{0}{1}1"
 for name in names:
     temp = []
-    if (name == "Suba"):
-        sub = [11,21,31,41,51,56,61,66,71,76]
-        zip1 = '{0}{1}'
+    if name == "Suba":
+        sub = [11, 21, 31, 41, 51, 56, 61, 66, 71, 76]
+        zip1 = "{0}{1}"
         for j in sub:
-            current = zip1.format(localities[name][0],j)
-            zip_locality_list.append([name,current])
+            current = zip1.format(localities[name][0], j)
+            zip_locality_list.append([name, current])
             temp.append("/{}.json".format(str(current)))
     else:
-        for j in range(1,localities[name][1]+1):
-            current = zip.format(localities[name][0],j)
-            zip_locality_list.append([name,current])
+        for j in range(1, localities[name][1] + 1):
+            current = zip.format(localities[name][0], j)
+            zip_locality_list.append([name, current])
             temp.append("{}.json".format(str(current)))
-    zipnames.append({name:temp})
+    zipnames.append({name: temp})
+
 
 def give_zip_list(name):
     switcher = {
@@ -62,184 +63,259 @@ def give_zip_list(name):
     }
     return switcher.get(name, "Invalid list name")
 
+
 #%%
-'''Change directory'''
-data_file_today = 'staticfiles/data/today.csv'
-data_file_yesterday = 'staticfiles/data/yesterday.csv'
+"""Change directory"""
+data_file_today = "staticfiles/data/today.csv"
+data_file_yesterday = "staticfiles/data/yesterday.csv"
 # data_file_today = 'today.csv'
 # data_file_yesterday = 'yesterday.csv'
 #%%
 def read_csv(datafile, fix=True):
-    data_df = pd.read_csv(datafile, skiprows=4,sep=';', skipfooter=2, engine="python", encoding="utf-8")
+    data_df = pd.read_csv(
+        datafile, skiprows=4, sep=";", skipfooter=2, engine="python", encoding="utf-8"
+    )
     if fix:
-        fix_df(data_df) 
+        fix_df(data_df)
     return data_df
+
 
 #%%
 def fix_df(data):
-    column_names = ['caseID',"date","city","locality","age","sex","type","place","state"]
+    column_names = [
+        "caseID",
+        "date",
+        "city",
+        "locality",
+        "age",
+        "sex",
+        "type",
+        "place",
+        "state",
+    ]
     data.columns = column_names
-    date_list =[]
-    date_raw = data['date'].tolist()
-    data['state'] = data['state'].str.strip()
-    data['state'] = data['state'].str.capitalize()
-    data['state'] = data['state'].str.replace(",,","")
+    date_list = []
+    date_raw = data["date"].tolist()
+    data["state"] = data["state"].str.strip()
+    data["state"] = data["state"].str.capitalize()
+    data["state"] = data["state"].str.replace(",,", "")
     data_copy = copy.deepcopy(data)
-    data.loc[data_copy['state'] == "Fallecido (no aplica, no causa directa)", 'state'] = "Fallecido"
+    data.loc[
+        data_copy["state"] == "Fallecido (no aplica, no causa directa)", "state"
+    ] = "Fallecido"
     for i in range(0, len(data)):
         date_fixed = date_raw[i].split("/")
         date_fixed.reverse()
         date_fixed = "-".join(date_fixed)
         date_list.append(date_fixed)
-    data['date'] = date_list
-    
+    data["date"] = date_list
+
+
 #%%
 df = read_csv(data_file_today)
 df_yesterday = read_csv(data_file_yesterday)
 #%%
 def give_bogota_total():
     return len(df)
+
+
 #%%
 def give_bogota_extra():
     return len(df) - len(df_yesterday)
+
+
 # %%
 def give_df(*name):
     group = [*name]
-    return df.groupby(group).size().to_frame(name='count').reset_index()
+    return df.groupby(group).size().to_frame(name="count").reset_index()
+
 
 #%%
 def give_df_yesterday(*name):
     group = [*name]
-    return df_yesterday.groupby(group).size().to_frame(name='count').reset_index()
+    return df_yesterday.groupby(group).size().to_frame(name="count").reset_index()
+
 
 #%%
 def give_diff_df():
-    diff = list(map(operator.sub, 
-        give_df('locality')['count'].values.tolist(),
-        give_df_yesterday('locality')['count'].values.tolist()))
-    df_locality_diff = give_df('locality')
-    df_locality_diff['count'] =diff
+    diff = list(
+        map(
+            operator.sub,
+            give_df("locality")["count"].values.tolist(),
+            give_df_yesterday("locality")["count"].values.tolist(),
+        )
+    )
+    df_locality_diff = give_df("locality")
+    df_locality_diff["count"] = diff
     return df_locality_diff
+
 
 #%%
 def give_data_dict(name):
     return df.set_index(name).to_dict()
 
+
 #%%
 def give_json_file():
-    json_file = 'static/js/localities-data.json'
+    json_file = "static/js/localities-data.json"
     # json_file = 'localities-data.json'
-    with open(json_file, 'r',encoding='utf8') as response:
+    with open(json_file, "r", encoding="utf8") as response:
         js = json.load(response)
     return js
+
+
 #%%
 def give_df_zip():
-    df_zip = pd.DataFrame(give_zip_list('locality'), columns = ["locality", "ZIP"])
+    df_zip = pd.DataFrame(give_zip_list("locality"), columns=["locality", "ZIP"])
     df_zip["count"] = 0
-    local_count = give_df('locality').set_index('locality').to_dict()['count']
+    local_count = give_df("locality").set_index("locality").to_dict()["count"]
     for name in names:
         try:
-            df_zip.loc[df_zip['locality'] == name, 'count'] = local_count[name]
+            df_zip.loc[df_zip["locality"] == name, "count"] = local_count[name]
         except:
             pass
     return df_zip
 
+
 #%%
-def give_list_locality_state_ratio(sortby = 'count', ascending=False):
-    temp = give_df('locality').sort_values('count', ascending=ascending)
-    names = list(temp['locality'])
-    temp = give_df('locality','state')
-    temp['state']=pd.Categorical(temp['state'], ["Recuperado","Moderado","Severo","Crítico","Fallecido","Fallecido (no aplica, no causa directa)"])
-    temp['locality']=pd.Categorical(temp['locality'], names)
-    df_locality_state = temp.sort_values(['locality','state'])
-    diff_dict = give_diff_df().set_index('locality').to_dict()['count']
+def give_list_locality_state_ratio(sortby="count", ascending=False):
+    temp = give_df("locality").sort_values("count", ascending=ascending)
+    names = list(temp["locality"])
+    temp = give_df("locality", "state")
+    temp["state"] = pd.Categorical(
+        temp["state"],
+        [
+            "Recuperado",
+            "Moderado",
+            "Severo",
+            "Crítico",
+            "Fallecido",
+            "Fallecido (no aplica, no causa directa)",
+        ],
+    )
+    temp["locality"] = pd.Categorical(temp["locality"], names)
+    df_locality_state = temp.sort_values(["locality", "state"])
+    diff_dict = give_diff_df().set_index("locality").to_dict()["count"]
     locality_state_ratio = []
     for name in names:
         try:
-            df_temp = df_locality_state[df_locality_state['locality']==name]
-            df_temp['ratio'] = df_temp['count']/sum(df_temp['count'])
+            df_temp = df_locality_state[df_locality_state["locality"] == name]
+            df_temp["ratio"] = df_temp["count"] / sum(df_temp["count"])
             df_temp_copy = copy.deepcopy(df_temp)
-            df_temp['state'] = pd.Categorical(df_temp_copy['state'], ["Recuperado","Moderado","Severo","Crítico","Fallecido"])
+            df_temp["state"] = pd.Categorical(
+                df_temp_copy["state"],
+                ["Recuperado", "Moderado", "Severo", "Crítico", "Fallecido"],
+            )
             df_temp = df_temp.sort_values("state")
-            df_temp['ratio'] = pd.Series(["{0:.2f}%".format(val * 100) for val in df_temp['ratio']], index = df_temp.index)
-            total_dict = give_df('locality').set_index('locality').to_dict()['count']
-            df_temp['count'] = df_temp['count'].apply(lambda x : f"{x:,d}")
+            df_temp["ratio"] = pd.Series(
+                ["{0:.2f}%".format(val * 100) for val in df_temp["ratio"]],
+                index=df_temp.index,
+            )
+            total_dict = give_df("locality").set_index("locality").to_dict()["count"]
+            df_temp["count"] = df_temp["count"].apply(lambda x: f"{x:,d}")
             graph_id = "main-bogota-graph-{}"
             dict_temp = {
-                "name":name,
+                "name": name,
                 "total": f"{total_dict[name]:,d}",
                 "extra": diff_dict[name],
-                "state": df_temp.set_index('state')['count'].to_dict(),
-                "state_ratio": df_temp.set_index('state')['ratio'].to_dict(),
-                "id": graph_id.format(names.index(name)+1),}
+                "state": df_temp.set_index("state")["count"].to_dict(),
+                "state_ratio": df_temp.set_index("state")["ratio"].to_dict(),
+                "id": graph_id.format(names.index(name) + 1),
+            }
             locality_state_ratio.append(dict_temp)
         except:
             pass
     return locality_state_ratio
 
+
 # %%
 def give_plot_div(lang="spa"):
-    switcher = {
-        "spa": 'Casos',
-        "en": 'Cases',
-        "kr": '확진자수'
-    }
+    switcher = {"spa": "Casos", "en": "Cases", "kr": "확진자수"}
     language = switcher.get(lang, "Invalid language")
     df_zip = give_df_zip()
-    fig = px.choropleth_mapbox(df_zip, geojson=give_json_file(), locations='ZIP', color='count',
-                            color_continuous_scale="OrRd",
-                            range_color=(min(df_zip['count']), max(df_zip['count'])),
-                            mapbox_style="carto-positron",
-                            hover_name="locality",
-                            zoom=9, center = {"lat": 4.6097102, "lon": -74.081749},
-                            opacity=0.5,
-                            labels={'count':language},
-                        )
-    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-    plot_div = plot(fig,
-                output_type='div',include_plotlyjs=False,
-                show_link=False, link_text="", config={'displayModeBar': False})
+    fig = px.choropleth_mapbox(
+        df_zip,
+        geojson=give_json_file(),
+        locations="ZIP",
+        color="count",
+        color_continuous_scale="OrRd",
+        range_color=(min(df_zip["count"]), max(df_zip["count"])),
+        mapbox_style="carto-positron",
+        hover_name="locality",
+        zoom=9,
+        center={"lat": 4.6097102, "lon": -74.081749},
+        opacity=0.3,
+        labels={"count": language},
+    )
+    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+    plot_div = plot(
+        fig,
+        output_type="div",
+        include_plotlyjs=False,
+        show_link=False,
+        link_text="",
+        config={"displayModeBar": False},
+    )
     return plot_div
+
 
 #%%
 
-def give_bogota_state(format = "count"):
-    df_state = give_df('state')
-    df_state['ratio'] = df_state['count']/sum(df_state['count'])
-    df_state['ratio'] = pd.Series(["{0:.2f}%".format(val * 100) for val in df_state['ratio']], index = df_state.index)
-    states = ['Recuperado','Moderado','Severo','Crítico','Fallecido','Fallecido (no aplica, no causa directa)']
-    df_state['state'] = pd.Categorical(df_state['state'], states)
+
+def give_bogota_state(format="count"):
+    df_state = give_df("state")
+    df_state["ratio"] = df_state["count"] / sum(df_state["count"])
+    df_state["ratio"] = pd.Series(
+        ["{0:.2f}%".format(val * 100) for val in df_state["ratio"]],
+        index=df_state.index,
+    )
+    states = [
+        "Recuperado",
+        "Moderado",
+        "Severo",
+        "Crítico",
+        "Fallecido",
+        "Fallecido (no aplica, no causa directa)",
+    ]
+    df_state["state"] = pd.Categorical(df_state["state"], states)
     df_state = df_state.sort_values("state")
-    bogota_state = list(df_state['count'])
+    bogota_state = list(df_state["count"])
     [f"{item:,d}" for item in bogota_state]
-    bogota_state_ratio = list(df_state['ratio'])
+    bogota_state_ratio = list(df_state["ratio"])
     switcher = {
         "count": bogota_state,
         "ratio": bogota_state_ratio,
     }
     return switcher.get(format, "Invalid property")
+
+
 #%%
-update_day = "12"
+update_day = "14"
 update_month = "06"
 update_year = "2020"
 
-def give_update_time(lang="spa", day = update_day, month=update_month, year=update_year):
+
+def give_update_time(lang="spa", day=update_day, month=update_month, year=update_year):
     day = day
     month = month
     year = year
-    date = "{0}.{1}.{2} 0:00{3}"
+    date = "{0}.{1}.{2} 15:19{3}"
     switcher = {
-        "spa": date.format(day,month,year, ""),
-        "en": date.format(month,day,year, ""),
-        "kr": date.format(month,day,year, " 시")
+        "spa": date.format(day, month, year, ""),
+        "en": date.format(month, day, year, ""),
+        "kr": date.format(month, day, year, " 시"),
     }
-    update = switcher.get(lang,"Invalid language")
+    update = switcher.get(lang, "Invalid language")
     return update
+
 
 #%%
 def add_percentage(data):
-    data['percentage'] = data['count']/sum(data['count'])
-    data['percentage'] = pd.Series(["{0:.2f}%".format(val * 100) for val in data['percentage']], index = data.index)
+    data["percentage"] = data["count"] / sum(data["count"])
+    data["percentage"] = pd.Series(
+        ["{0:.2f}%".format(val * 100) for val in data["percentage"]], index=data.index
+    )
+
 
 #%%
 def give_age_sex_graph(lang="spa"):
@@ -253,189 +329,259 @@ def give_age_sex_graph(lang="spa"):
         "en": "Cases",
         "kr": "확진자수",
     }
-    df_age = give_df('age')
-    df_age_sex = give_df('age','sex')
+    df_age = give_df("age")
+    df_age_sex = give_df("age", "sex")
     add_percentage(df_age)
     add_percentage(df_age_sex)
-    df_age_f = df_age_sex[df_age_sex['sex']=="F"]
-    df_age_m = df_age_sex[df_age_sex['sex']=="M"]
+    df_age_f = df_age_sex[df_age_sex["sex"] == "F"]
+    df_age_m = df_age_sex[df_age_sex["sex"] == "M"]
     fig = go.Figure()
     fig.add_trace(
         go.Scatter(
-            x=df_age['age'], y=df_age['count'], name='Total',
-            text = df_age['percentage'],
-            hovertemplate =
-                '<br><b>%{text}</b><br>',
-        ))
+            x=df_age["age"],
+            y=df_age["count"],
+            name="Total",
+            text=df_age["percentage"],
+            hovertemplate="<br><b>%{text}</b><br>",
+        )
+    )
     fig.add_trace(
         go.Scatter(
-            x=df_age_f['age'], y=df_age_f['count'], name='F',
-            text = df_age_f['percentage'],
-            hovertemplate =
-                '<br><b>%{text}</b><br>',
-        ))
+            x=df_age_f["age"],
+            y=df_age_f["count"],
+            name="F",
+            text=df_age_f["percentage"],
+            hovertemplate="<br><b>%{text}</b><br>",
+        )
+    )
     fig.add_trace(
         go.Scatter(
-            x=df_age_m['age'], y=df_age_m['count'], name='M',
-            text = df_age_m['percentage'],
-            hovertemplate =
-                '<br><b>%{text}</b><br>',
-        ))
+            x=df_age_m["age"],
+            y=df_age_m["count"],
+            name="M",
+            text=df_age_m["percentage"],
+            hovertemplate="<br><b>%{text}</b><br>",
+        )
+    )
     x_title = switcher_x.get(lang, "Invalid language")
     y_title = switcher_y.get(lang, "Invalid language")
-    fig.update_xaxes(nticks=11,tick0=0, dtick=10, title_text=x_title)
-    fig.update_yaxes(nticks=5,tick0=0, dtick=100, title_text=y_title)
+    fig.update_xaxes(nticks=11, tick0=0, dtick=10, title_text=x_title)
+    fig.update_yaxes(nticks=5, tick0=0, dtick=100, title_text=y_title)
 
     # fig.update_layout(xaxis_showgrid=False, yaxis_showgrid=False)
     fig.update_layout(
-        hovermode='x',
+        hovermode="x",
         legend_orientation="h",
-        template = 'plotly_white',
-        margin = go.layout.Margin(
-            l=20, r=10, t=0, b=30,
-        ),
+        template="plotly_white",
+        margin=go.layout.Margin(l=20, r=10, t=0, b=30,),
         legend=dict(x=0.4, y=1),
     )
-    plot_div = plot(fig,
-                output_type='div',include_plotlyjs=False,
-                show_link=False, link_text="", config={'displayModeBar': False})
+    plot_div = plot(
+        fig,
+        output_type="div",
+        include_plotlyjs=False,
+        show_link=False,
+        link_text="",
+        config={"displayModeBar": False},
+    )
     return plot_div
+
+
+#%%
+def fix_uci_csv(data):
+    column_names = [
+        "group",
+        "neonatal",
+        "pediatric",
+        "adult",
+        "neonatal",
+        "pediatric",
+        "adult",
+        "neonatal",
+        "pediatric",
+        "adult1",
+    ]
+    data.columns = column_names
+    data["adult1"] = data["adult1"].str.replace(",,,,,,,", "")
+    column_names = [
+        "group",
+        "neonatal",
+        "pediatric",
+        "adult",
+        "neonatal",
+        "pediatric",
+        "adult",
+        "neonatal",
+        "pediatric",
+        "adult",
+    ]
+    data.columns = column_names
+    data = data.T.reset_index()
+    new_header = data.iloc[0]  # grab the first row for the header
+    data = data[1:]  # take the data less the header row
+    data.columns = new_header  # set the header row as the df header
+    values = [
+        "general",
+        "general",
+        "general",
+        "UCIM",
+        "UCIM",
+        "UCIM",
+        "UCI",
+        "UCI",
+        "UCI",
+    ]
+    data.insert(0, "hospital", values)
+    data.columns = ["hospital", "group", "in_use", "total", "percentage", "free"]
+    return data
+
+
+#%%
+hospital_public = fix_uci_csv(
+    pd.read_csv(
+        "staticfiles/data/uci.csv",
+        skiprows=6,
+        sep=";",
+        skipfooter=14,
+        engine="python",
+        encoding="utf8",
+    )
+)
+hospital_private = fix_uci_csv(
+    pd.read_csv(
+        "staticfiles/data/uci.csv",
+        skiprows=14,
+        sep=";",
+        skipfooter=6,
+        engine="python",
+        encoding="utf8",
+    )
+)
+
+#%%
+
+
+def give_hospital_df(institution="public", hospital_type="general"):
+    param = "hospital=='{}'".format(hospital_type)
+    switcher = {
+        "public": hospital_public.query(param),
+        "private": hospital_private.query(param),
+    }
+    return switcher.get(institution, "Invalid Institution").reset_index()
+
 
 #%%
 def give_hospital_availability(lang="spa", hospital_type="general"):
-    hospital = pd.read_csv('staticfiles/data/uci.csv', encoding='Latin-1', decimal=',',thousands='.')
-
-    hospital_general_public = hospital.query("(IPS=='Públicas') & (Servicio=='Hospitalización General')").reset_index()
-    hospital_general_private = hospital.query("(IPS=='Privadas') & (Servicio=='Hospitalización General')").reset_index()
-
-    hospital_intermediate_public = hospital.query("(IPS=='Públicas') & (Servicio=='Unidad de Cuidado Intermedio')").reset_index()
-    hospital_intermediate_private = hospital.query("(IPS=='Privadas') & (Servicio=='Unidad de Cuidado Intermedio')").reset_index()
-
-    hospital_intensive_public = hospital.query("(IPS=='Públicas') & (Servicio=='Unidad de cuidado intensivo')").reset_index()
-    hospital_intensive_private = hospital.query("(IPS=='Privadas') & (Servicio=='Unidad de cuidado intensivo')").reset_index()
-    
-    switcher_hospital = {
-        "general":{
-            "public": hospital_general_public,
-            "private": hospital_general_private,
-        },
-        "IMCU": {
-            "public": hospital_intermediate_public,
-            "private": hospital_intermediate_private,
-        },
-        "ICU": {
-            "public": hospital_intensive_public,
-            "private": hospital_intensive_private,
-        },
-    }
-
-    hospital_df = switcher_hospital.get(hospital_type, "Invalid language")
-
     switcher_lang = {
         "spa": {
-            "type": ["Público","Privado"],
-            "service": ['General','UCIM','UCI'],
-            "group": ["Neonatal","Pediátrico","Adulto"],
-            "hover": 'Ocupadas: {}/{}<br>Disponibles: {}',
+            "type": ["Público", "Privado"],
+            "service": ["General", "UCIM", "UCI"],
+            "group": ["Neonatal", "Pediátrico", "Adulto"],
+            "hover": "Ocupadas: {}/{}<br>Disponibles: {}",
         },
         "en": {
-            "type": ["Public","Private"],
-            "service": ['General','IMCU','ICU'],
-            "group": ["Neonatal","Pediatric","Adult"],
-            "hover": 'Occupied: {}/{}<br>Available: {}',
+            "type": ["Public", "Private"],
+            "service": ["General", "IMCU", "ICU"],
+            "group": ["Neonatal", "Pediatric", "Adult"],
+            "hover": "Occupied: {}/{}<br>Available: {}",
         },
         "kr": {
-            "type": ["공공","민간"],
-            "service": ['일반','IMCU','ICU'],
-            "group": ["신생아","소아과","성인"],
-            "hover": '사용 중: {}/{}<br>사용 가능: {}',
+            "type": ["공공", "민간"],
+            "service": ["일반", "IMCU", "ICU"],
+            "group": ["신생아", "소아과", "성인"],
+            "hover": "사용 중: {}/{}<br>사용 가능: {}",
         },
     }
 
     info = switcher_lang.get(lang, "Invalid language")
-
+    hosp1 = give_hospital_df("public", hospital_type)
+    hosp2 = give_hospital_df("private", hospital_type)
     fig = go.Figure()
-    fig.add_trace(go.Scatterpolar(
-        r=hospital_df['public']['Porcentaje de Ocupación'],
-        theta=info['group'],
-        fill='toself',
-        name=info['type'][0],
-        text = [info['hover'].format(
-            hospital_df['public']['Camas Ocupadas'][i],
-            hospital_df['public']['Camas habilitadas'][i],
-            hospital_df['public']['Camas disponibles'][i],
-            ) for i in range (0,len(hospital_df['public']))],
-        hovertemplate = '%{text}',
+    fig.add_trace(
+        go.Scatterpolar(
+            r=hosp1["percentage"],
+            theta=info["group"],
+            fill="toself",
+            name=info["type"][0],
+            text=[
+                info["hover"].format(
+                    hosp1["in_use"][i], hosp1["total"][i], hosp1["free"][i],
+                )
+                for i in range(0, len(hosp1))
+            ],
+            hovertemplate="%{text}",
         ),
-        
     )
-    fig.add_trace(go.Scatterpolar(
-        r=hospital_df['private']['Porcentaje de Ocupación'],
-        theta=info['group'],
-        fill='toself',
-        name=info['type'][1],
-        text = [info['hover'].format(
-            hospital_df['private']['Camas Ocupadas'][i],
-            hospital_df['private']['Camas habilitadas'][i],
-            hospital_df['private']['Camas disponibles'][i],
-            ) for i in range (0,len(hospital_df['private']))],
-        hovertemplate = '%{text}',
+    fig.add_trace(
+        go.Scatterpolar(
+            r=hosp2["percentage"],
+            theta=info["group"],
+            fill="toself",
+            name=info["type"][0],
+            text=[
+                info["hover"].format(
+                    hosp2["in_use"][i], hosp2["total"][i], hosp2["free"][i],
+                )
+                for i in range(0, len(hosp2))
+            ],
+            hovertemplate="%{text}",
         ),
     )
 
     fig.update_layout(
-        polar=dict(
-            radialaxis=dict(
-            visible=True,
-            range=[0, 100]
-            )),
+        polar=dict(radialaxis=dict(visible=True, range=[0, 100])),
         showlegend=True,
-        template = "plotly_white",
-        legend = dict(x=0.5, y=0.8),
+        template="plotly_white",
+        legend=dict(x=0.5, y=0.8),
         legend_orientation="h",
-        hovermode = 'x',
-        margin = go.layout.Margin(
-                l=55, r=55, t=0, b=0,
-            ),
+        hovermode="x",
+        margin=go.layout.Margin(l=55, r=55, t=0, b=0,),
         autosize=True,
         # height=210,
         # width=300,
     )
 
-    plot_div = plot(fig,
-                output_type='div',include_plotlyjs=False,
-                show_link=False, link_text="", config={'displayModeBar': False})
+    plot_div = plot(
+        fig,
+        output_type="div",
+        include_plotlyjs=False,
+        show_link=False,
+        link_text="",
+        config={"displayModeBar": False},
+    )
     return plot_div
 
 
-
 #%%
+
 
 def give_title(lang="spa"):
     switcher = {
-        "spa" : "CoronaMap Bogotá",
-        "en" : "CoronaMap Bogotá",
-        "kr" : "코로나맵 보고타",
+        "spa": "CoronaMap Bogotá",
+        "en": "CoronaMap Bogotá",
+        "kr": "코로나맵 보고타",
     }
-    return switcher.get(lang,"Invalid Language")
+    return switcher.get(lang, "Invalid Language")
+
 
 #%%
 
+
 def give_navbar(lang="spa"):
     switcher_title = {
-        "spa" : "BOGOTÁ: COVID-19",
-        "en" : "BOGOTÁ: COVID-19",
-        "kr" : "보고타: 코로나-19"
+        "spa": "BOGOTÁ: COVID-19",
+        "en": "BOGOTÁ: COVID-19",
+        "kr": "보고타: 코로나-19",
     }
     switcher_language = {
-        "spa" : "Idioma: Español",
-        "en" : "Language: English",
-        "kr" : "언어: 한국어"
+        "spa": "Idioma: Español",
+        "en": "Language: English",
+        "kr": "언어: 한국어",
     }
     navbar_title = switcher_title.get(lang, "Invalid language")
     navbar_update = give_update_time(lang)
     navbar_language = switcher_language.get(lang, "Invalid language")
-    
+
     navbar = {
         "title": navbar_title,
         "update": navbar_update,
@@ -443,35 +589,40 @@ def give_navbar(lang="spa"):
     }
 
     return navbar
+
+
 #%%
+
 
 def give_sidebar(lang="spa"):
     sidebar_spa = {
         "title": "Home",
         "header": {
-            "1":"Datos Principales",
-            "2":"Ocupación Hospitalización",
-            "3":"Apoyo",
-            "4":"Idioma"
+            "1": "Datos Principales",
+            "2": "Ocupación Hospitalización",
+            "3": "Apoyo",
+            "4": "Idioma",
         },
-        "content":{
-            "1": ["Datos Actuales", "Estado de pacientes", "Casos por localidad","CoronaMap","Casos por edad y sexo", "한인회 공지"],
-            "2": ["General","UCIM","UCI"],
-            "3": ["Apoyo voluntario","Retroalimentación", "Donación"],
+        "content": {
+            "1": [
+                "Datos Actuales",
+                "Estado de pacientes",
+                "Casos por localidad",
+                "CoronaMap",
+                "Casos por edad y sexo",
+                "한인회 공지",
+            ],
+            "2": ["General", "UCIM", "UCI"],
+            "3": ["Apoyo voluntario", "Retroalimentación", "Donación"],
             "4": ["Coreano", "Español", "Inglés"],
         },
     }
     sidebar_kr = {
         "title": "홈",
-        "header": {
-            "1":"핵심내용",
-            "2":"병원침대 사용 여부",
-            "3":"도움 지원",
-            "4":"언어"
-        },
-        "content":{
-            "1": ["현황", "상세현황", "지역별 현황","코로나맵","성별&연령대별 분석","한인회 공지"],
-            "2": ["일반","IMCU","ICU"],
+        "header": {"1": "핵심내용", "2": "병원침대 사용 여부", "3": "도움 지원", "4": "언어"},
+        "content": {
+            "1": ["현황", "상세현황", "지역별 현황", "코로나맵", "성별&연령대별 분석", "한인회 공지"],
+            "2": ["일반", "IMCU", "ICU"],
             "3": ["지원", "피드백", "기부"],
             "4": ["한국어", "스페인어", "영어"],
         },
@@ -479,24 +630,32 @@ def give_sidebar(lang="spa"):
     sidebar_en = {
         "title": "Home",
         "header": {
-            "1":"Main Data",
-            "2":"Hospital Bed Occupancy Rate",
-            "3":"Support",
-            "4":"Language",
+            "1": "Main Data",
+            "2": "Hospital Bed Occupancy Rate",
+            "3": "Support",
+            "4": "Language",
         },
-        "content":{
-            "1": ["Today's Data", "Patient's state", "Cases by Locality","CoronaMap","Cases by age & sex","한인회 공지"],
-            "2": ["General","IMCU","ICU"],
+        "content": {
+            "1": [
+                "Today's Data",
+                "Patient's state",
+                "Cases by Locality",
+                "CoronaMap",
+                "Cases by age & sex",
+                "한인회 공지",
+            ],
+            "2": ["General", "IMCU", "ICU"],
             "3": ["Volunteer", "Feedback", "Donation"],
-            "4": ["Korean","Spanish","English"],
+            "4": ["Korean", "Spanish", "English"],
         },
     }
     switcher = {
-        "spa" : sidebar_spa,
-        "en"  : sidebar_en,
-        "kr"  : sidebar_kr,
+        "spa": sidebar_spa,
+        "en": sidebar_en,
+        "kr": sidebar_kr,
     }
-    return switcher.get(lang,"Invalid language")
+    return switcher.get(lang, "Invalid language")
+
 
 #%%
 def give_footer(lang="spa"):
@@ -510,12 +669,13 @@ def give_footer(lang="spa"):
         "email": "이메일: mc.park@uniandes.edu.co",
     }
     switcher = {
-        "spa" : footer_spa,
-        "en"  : footer_en,
-        "kr"  : footer_kr,
+        "spa": footer_spa,
+        "en": footer_en,
+        "kr": footer_kr,
     }
     return switcher.get(lang, "Invalid language")
-    
+
+
 #%%
 def give_data_box(lang="spa"):
     # Headers are in the give_side_bar() function to reduce redundancy.
@@ -523,40 +683,35 @@ def give_data_box(lang="spa"):
     bogota_extra = f"{give_bogota_extra():,d}"
     # Detailed Data
     bogota_state = give_bogota_state()
-    bogota_state_ratio = give_bogota_state('ratio')
+    bogota_state_ratio = give_bogota_state("ratio")
 
     # Data by locality
     locality_state_list = give_list_locality_state_ratio()
 
     df_nw = pd.read_csv("staticfiles/data/data.csv")
-    national_total = df_nw['national_state'][3]
-    national_extra = df_nw['national_extra'][0]
-    national_state = df_nw['national_state'][:3].values.tolist()
-    national_state_ratio = df_nw['national_state_ratio'][:3].values.tolist()
+    national_total = df_nw["national_state"][3]
+    national_extra = df_nw["national_extra"][0]
+    national_state = df_nw["national_state"][:3].values.tolist()
+    national_state_ratio = df_nw["national_state_ratio"][:3].values.tolist()
 
-    worldwide_total = df_nw['worldwide_state'][3]
-    worldwide_extra = df_nw['worldwide_extra'][0]
-    worldwide_state = df_nw['worldwide_state'][:3].values.tolist()
-    worldwide_state_ratio = df_nw['worldwide_state_ratio'][:3].values.tolist()
+    worldwide_total = df_nw["worldwide_state"][3]
+    worldwide_extra = df_nw["worldwide_extra"][0]
+    worldwide_state = df_nw["worldwide_state"][:3].values.tolist()
+    worldwide_state_ratio = df_nw["worldwide_state_ratio"][:3].values.tolist()
 
-    
     kr_total = "{}명"
     kr_extra = "(전일대비)+{}"
 
     data_box_main_kr = {
-        "title": {
-            "bogota": "보고타확진자",
-            "national": "국내확진자",
-            "worldwide": "세계확진자",
-        },
+        "title": {"bogota": "보고타확진자", "national": "국내확진자", "worldwide": "세계확진자",},
         "total": {
             "bogota": kr_total.format(bogota_total),
             "national": kr_total.format(national_total),
             "worldwide": kr_total.format(worldwide_total),
         },
         "extra": {
-            "bogota"   : kr_extra.format(bogota_extra),
-            "national" : kr_extra.format(national_extra),
+            "bogota": kr_extra.format(bogota_extra),
+            "national": kr_extra.format(national_extra),
             "worldwide": kr_extra.format(worldwide_extra),
         },
     }
@@ -573,146 +728,137 @@ def give_data_box(lang="spa"):
             "worldwide": worldwide_total,
         },
         "extra": {
-            "bogota"   : "+{}".format(bogota_extra),
-            "national" : "+{}".format(national_extra),
+            "bogota": "+{}".format(bogota_extra),
+            "national": "+{}".format(national_extra),
             "worldwide": "+{}".format(worldwide_extra),
         },
     }
     data_box_main_spa = {
-        "title": {
-            "bogota": "Bogotá",
-            "national": "Nacional",
-            "worldwide": "Global",
-        },
+        "title": {"bogota": "Bogotá", "national": "Nacional", "worldwide": "Global",},
         "total": {
             "bogota": bogota_total,
             "national": national_total,
             "worldwide": worldwide_total,
         },
         "extra": {
-            "bogota"   : "+{}".format(bogota_extra),
-            "national" : "+{}".format(national_extra),
+            "bogota": "+{}".format(bogota_extra),
+            "national": "+{}".format(national_extra),
             "worldwide": "+{}".format(worldwide_extra),
         },
     }
 
     data_box_detailed_kr = {
         "title": {
-            "bogota":"보고타: {}명".format(bogota_total),
+            "bogota": "보고타: {}명".format(bogota_total),
             "national": "국내: {}명".format(national_total),
             "worldwide": "세계: {}명".format(worldwide_total),
         },
-        "label": ['완치자', '무증상자','경증 환자','중증 환자', '사망자', '격리자'],
+        "label": ["완치자", "무증상자", "경증 환자", "중증 환자", "사망자", "격리자"],
         "count": {
-            "bogota":bogota_state,
-            "national":national_state,
-            "worldwide":worldwide_state,
+            "bogota": bogota_state,
+            "national": national_state,
+            "worldwide": worldwide_state,
         },
         "ratio": {
-            "bogota":bogota_state_ratio,
-            "national":national_state_ratio,
-            "worldwide":worldwide_state_ratio,
+            "bogota": bogota_state_ratio,
+            "national": national_state_ratio,
+            "worldwide": worldwide_state_ratio,
         },
     }
 
     data_box_detailed_en = {
         "title": {
-            "bogota":"Bogotá: {}".format(bogota_total),
+            "bogota": "Bogotá: {}".format(bogota_total),
             "national": "National: {}".format(national_total),
             "worldwide": "Worldwide: {}".format(worldwide_total),
         },
-        "label": ['Recovered', 'Moderate','Severe','Critical', 'Dead', 'Active'],
+        "label": ["Recovered", "Moderate", "Severe", "Critical", "Dead", "Active"],
         "count": {
-            "bogota":bogota_state,
-            "national":national_state,
-            "worldwide":worldwide_state,
+            "bogota": bogota_state,
+            "national": national_state,
+            "worldwide": worldwide_state,
         },
         "ratio": {
-            "bogota":bogota_state_ratio,
-            "national":national_state_ratio,
-            "worldwide":worldwide_state_ratio,
+            "bogota": bogota_state_ratio,
+            "national": national_state_ratio,
+            "worldwide": worldwide_state_ratio,
         },
     }
     data_box_detailed_spa = {
         "title": {
-            "bogota":"Bogotá: {}".format(bogota_total),
+            "bogota": "Bogotá: {}".format(bogota_total),
             "national": "Nacional: {}".format(national_total),
             "worldwide": "Global: {}".format(worldwide_total),
         },
-        "label": ['Recuperados', 'Moderados','Severos','Críticos', 'Fallecidos', 'Activos'],
+        "label": [
+            "Recuperados",
+            "Moderados",
+            "Severos",
+            "Críticos",
+            "Fallecidos",
+            "Activos",
+        ],
         "count": {
-            "bogota":bogota_state,
-            "national":national_state,
-            "worldwide":worldwide_state,
+            "bogota": bogota_state,
+            "national": national_state,
+            "worldwide": worldwide_state,
         },
         "ratio": {
-            "bogota":bogota_state_ratio,
-            "national":national_state_ratio,
-            "worldwide":worldwide_state_ratio,
+            "bogota": bogota_state_ratio,
+            "national": national_state_ratio,
+            "worldwide": worldwide_state_ratio,
         },
     }
 
     switcher_main = {
-        "spa" : data_box_main_spa,
-        "en"  : data_box_main_en,
-        "kr"  : data_box_main_kr,
+        "spa": data_box_main_spa,
+        "en": data_box_main_en,
+        "kr": data_box_main_kr,
     }
 
     switcher_detailed = {
-        "spa" : data_box_detailed_spa,
-        "en"  : data_box_detailed_en,
-        "kr"  : data_box_detailed_kr,
+        "spa": data_box_detailed_spa,
+        "en": data_box_detailed_en,
+        "kr": data_box_detailed_kr,
     }
 
     switcher_locality = {
         "spa": {
-            "filter":"Orden decreciente (casos)",
-            "placeholder":"Buscar por localidad",
+            "filter": "Orden decreciente (casos)",
+            "placeholder": "Buscar por localidad",
         },
-        "en" : {
-            "filter":"Decreasing order (cases)",
-            "placeholder":"Search by locality",
+        "en": {
+            "filter": "Decreasing order (cases)",
+            "placeholder": "Search by locality",
         },
-        "kr" : {
-            "filter":"확진자 분포 내림차순",
-            "placeholder":"지역을 입력해주세요",
-        },
+        "kr": {"filter": "확진자 분포 내림차순", "placeholder": "지역을 입력해주세요",},
     }
 
     switcher_map = {
         "spa": {
-            "header":"CoronaMap",
-            "update_box":"Actualizado",
-            "source":"Fuente",
-            "source_content":"Subsecretaría de Salud Pública. Secretaría Distrital de Salud 2020",
+            "header": "CoronaMap",
+            "update_box": "Actualizado",
+            "source": "Fuente",
+            "source_content": "Subsecretaría de Salud Pública. Secretaría Distrital de Salud 2020",
         },
-        "en":{
-            "header":"CoronaMap",
-            "update_box":"Update",
-            "source":"Source",
-            "source_content":"Subsecretaría de Salud Pública. Secretaría Distrital de Salud 2020",
+        "en": {
+            "header": "CoronaMap",
+            "update_box": "Update",
+            "source": "Source",
+            "source_content": "Subsecretaría de Salud Pública. Secretaría Distrital de Salud 2020",
         },
-        "kr":{
-            "header":"코로나맵",
-            "update_box":"업데이트",
-            "source":"출처",
-            "source_content":"Subsecretaría de Salud Pública. Secretaría Distrital de Salud 2020",
-        }
+        "kr": {
+            "header": "코로나맵",
+            "update_box": "업데이트",
+            "source": "출처",
+            "source_content": "Subsecretaría de Salud Pública. Secretaría Distrital de Salud 2020",
+        },
     }
 
     switcher_kr = {
-        "spa": {
-            "unit":"",
-            "day_before":"",
-        },
-        "en": {
-            "unit":"",
-            "day_before":"",
-        },
-        "kr": {
-            "unit":"명",
-            "day_before":"(전일대비)",
-        }
+        "spa": {"unit": "", "day_before": "",},
+        "en": {"unit": "", "day_before": "",},
+        "kr": {"unit": "명", "day_before": "(전일대비)",},
     }
 
     data_box = {
@@ -720,35 +866,45 @@ def give_data_box(lang="spa"):
         "detailed": switcher_detailed.get(lang, "Invalid language"),
         "locality": switcher_locality.get(lang, "Invalid language"),
         "map": switcher_map.get(lang, "Invalid language"),
-        "kr": switcher_kr.get(lang, "Invalid language")
+        "kr": switcher_kr.get(lang, "Invalid language"),
     }
 
     return data_box
 
+
 #%%
 
+
 def give_markdown():
-    markdowntext = open('staticfiles/md/6_13.md', encoding="utf8").read()
+    markdowntext = open("staticfiles/md/6_14.md", encoding="utf8").read()
     return markdowntext
+
+
 #%%
 def give_context(lang="spa"):
     bogota_total = f"{give_bogota_total():,d}"
     bogota_extra = f"{give_bogota_extra():,d}"
     # Detailed Data
     bogota_state = give_bogota_state()
-    bogota_state_ratio = give_bogota_state('ratio')
+    bogota_state_ratio = give_bogota_state("ratio")
     # Data by locality
     locality_state_list = give_list_locality_state_ratio()
 
-    context={
-        'title' : give_title(lang),
-        'navbar': give_navbar(lang),
-        'sidebar': give_sidebar(lang),
-        'footer': give_footer(lang),
-        'data_box': give_data_box(lang),
-        'covid_cases': give_data_dict('locality'),
-        'plot_div': [give_plot_div(lang), give_age_sex_graph(lang), give_hospital_availability(lang,"general"), give_hospital_availability(lang,"IMCU"), give_hospital_availability(lang,"ICU")],
-        'locality': locality_state_list,
-        'md' : give_markdown(),
+    context = {
+        "title": give_title(lang),
+        "navbar": give_navbar(lang),
+        "sidebar": give_sidebar(lang),
+        "footer": give_footer(lang),
+        "data_box": give_data_box(lang),
+        "covid_cases": give_data_dict("locality"),
+        "plot_div": [
+            give_plot_div(lang),
+            give_age_sex_graph(lang),
+            give_hospital_availability(lang, "general"),
+            give_hospital_availability(lang, "UCIM"),
+            give_hospital_availability(lang, "UCI"),
+        ],
+        "locality": locality_state_list,
+        "md": give_markdown(),
     }
     return context

@@ -1,19 +1,25 @@
-IPS,Servicio,Grupo,Camas Ocupadas,Camas habilitadas,Camas disponibles,Porcentaje de Ocupaci髇,Fecha Actualizaci髇
-P鷅licas,Hospitalizaci髇 General,Neonatal,105,138,33,76%,11/06/2020
-P鷅licas,Hospitalizaci髇 General,Pedi醫rico,111,400,289,28%,11/06/2020
-P鷅licas,Hospitalizaci髇 General,Adulto,905,1.188,329,73%,11/06/2020
-P鷅licas,Unidad de Cuidado Intermedio,Neonatal,98,126,28,78%,11/06/2020
-P鷅licas,Unidad de Cuidado Intermedio,Pedi醫rico,8,14,6,57%,11/06/2020
-P鷅licas,Unidad de Cuidado Intermedio,Adulto,53,72,11,83%,11/06/2020
-P鷅licas,Unidad de cuidado intensivo,Neonatal,44,68,24,65%,11/06/2020
-P鷅licas,Unidad de cuidado intensivo,Pedi醫rico,19,29,10,66%,11/06/2020
-P鷅licas,Unidad de cuidado intensivo,Adulto,129,137,34,79%,11/06/2020
-Privadas,Hospitalizaci髇 General,Neonatal,80,149,76,51%,11/06/2020
-Privadas,Hospitalizaci髇 General,Pedi醫rico,620,1.308,701,47%,11/06/2020
-Privadas,Hospitalizaci髇 General,Adulto,3999,4.963,1.344,75%,11/06/2020
-Privadas,Unidad de Cuidado Intermedio,Neonatal,152,248,93,62%,11/06/2020
-Privadas,Unidad de Cuidado Intermedio,Pedi醫rico,46,88,42,52%,11/06/2020
-Privadas,Unidad de Cuidado Intermedio,Adulto,324,409,182,64%,11/06/2020
-Privadas,Unidad de cuidado intensivo,Neonatal,92,202,107,46%,11/06/2020
-Privadas,Unidad de cuidado intensivo,Pedi醫rico,89,177,88,50%,11/06/2020
-Privadas,Unidad de cuidado intensivo,Adulto,646,793,371,64%,11/06/2020
+锘縋orcentaje de ocupaci贸n de los servicios de hospitalizaci贸n general, unidad de cuidado intermedio y unidad de cuidado intensivo en Bogot谩 D.C.;;;;;;;;;,,,,,,
+;;;;;;;;;,,,,,,,
+Utilidad: Monitorear las variaciones de la ocupaci贸n de los servicios de hospitalizaci贸n general, unidad de cuidado intermedio y unidad de cuidado intensivo frente a la capacidad instalada en el Distrito;;;;;;;;;,,,,,,
+;;;;;;;;;,,,,,,,
+IPS P煤blicas;;;;;;;;;,,,,,,,
+;HOSPITALIZACI脫N GENERAL ;;;UNIDAD DE CUIDADO INTERMEDIO;;;UNIDAD DE CUIDADO INTENSIVO;;,,,,,,,
+;CUIDADO BASICO NEONATAL;HOSPITALIZACI脫N PEDIATRICA;HOSPITALIZACI脫N ADULTO;NEONATAL;PEDIATRICO;ADULTO;NEONATAL;PEDIATRICO ;ADULTO,,,,,,,
+Camas ocupadas;94;95;901;75;9;55;47;18;117,,,,,,,
+Camas habilitadas;138;400;1234;126;14;64;68;29;163,,,,,,,
+Porcentaje de Ocupaci贸n;68%;24%;73%;60%;64%;86%;69%;62%;72%,,,,,,,
+Camas disponibles;44;305;333;51;5;9;21;11;46,,,,,,,
+;;;;;;;;;,,,,,,,
+IPS Privadas;;;;;;;;;,,,,,,,
+;HOSPITALIZACI脫N GENERAL ;;;UNIDAD DE CUIDADO INTERMEDIO;;;UNIDAD DE CUIDADO INTENSIVO;;,,,,,,,
+;CUIDADO BASICO NEONATAL;HOSPITALIZACI脫N PEDIATRICA;HOSPITALIZACI脫N ADULTO;NEONATAL;PEDIATRICO;ADULTO;NEONATAL;PEDIATRICO ;ADULTO,,,,,,,
+Camas ocupadas;108;673;3996;161;35;305;84;110;634,,,,,,,
+Camas habilitadas;156;1321;5343;245;88;506;199;177;1017,,,,,,,
+Porcentaje de Ocupaci贸n;69%;51%;75%;66%;40%;60%;42%;62%;62%,,,,,,,
+Camas disponibles;48;648;1.347;84;53;201;115;67;383,,,,,,,
+;;;;;;;;;,,,,,,,
+;;;;;;;;;,,,,,,,
+;;;;;;;;;,,,,,,,
+Fuente:  ;Camas Habilitadas. Registro Especial de Prestadores de Servicios de Salud. MSPS. Corte: 08/06/2020. Universo 100 IPS con servicios de hospitalizaci贸n y un total de 11.233 camas: 8723 camas de Hospitalizaci贸n general (adultos, ni帽os y b谩sico neonatal),  1061 camas de Unidades de cuidados intermedios (adultos, ni帽os y neonatos) y 1449 Unidades de cuidados intensivos (adultos, ni帽os y neonatos). De las anteriores se realiza seguimiento a 82 sedes, las cuales cuentan con 10.867 camas (96.7% de la oferta de camas), a las que se le adicionan 421 camas autorizadas transitoriamente a corte del 08/06/2020, para un total de 11.288 camas.;;;;;;;;
+;Ocupaci贸n IPS Publicas. Fuente: Sistema Integral de Referencia y Contrarreferencia-SIRC - SDS. Universo 24 IPS publicas. Reporte de 24 USS. Corte informaci贸n: 13-06-2020. Horario: 11:30 AM (% REPORTE = 100 %);;;;;;;;,,,,,,,
+;Ocupaci贸n IPS Privadas. Fuente: Universo 58 IPS. Reporte por aplicativo SIRC de 57 IPS privadas. Corte informaci贸n: 13-06-2020 11:30 AM (% REPORTE = 98,3 %);;;;;;;;,,,,,,
