@@ -517,7 +517,7 @@ def give_hospital_availability(lang="spa", hospital_type="general"):
             r=hosp2["percentage"],
             theta=info["group"],
             fill="toself",
-            name=info["type"][0],
+            name=info["type"][1],
             text=[
                 info["hover"].format(
                     hosp2["in_use"][i], hosp2["total"][i], hosp2["free"][i],
