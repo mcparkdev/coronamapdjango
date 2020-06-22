@@ -290,7 +290,7 @@ def give_bogota_state(format="count"):
 
 
 #%%
-update_day = "20"
+update_day = "21"
 update_month = "06"
 update_year = "2020"
 
@@ -299,7 +299,7 @@ def give_update_time(lang="spa", day=update_day, month=update_month, year=update
     day = day
     month = month
     year = year
-    date = "{0}.{1}.{2} 01:14{3}"
+    date = "{0}.{1}.{2} 19:29{3}"
     switcher = {
         "spa": date.format(day, month, year, ""),
         "en": date.format(month, day, year, ""),
@@ -876,7 +876,7 @@ def give_data_box(lang="spa"):
 
 
 def give_markdown():
-    markdowntext = open("staticfiles/md/6_18.md", encoding="utf8").read()
+    markdowntext = open("staticfiles/md/6_20.md", encoding="utf8").read()
     return markdowntext
 
 
